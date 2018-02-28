@@ -27,3 +27,9 @@ function get_footer()
     call_php_insert("get_footer","");
     document.documentElement.style.setProperty('--contentHeight',document.body.scrollHeight-100);
 }
+
+function get_repos()
+{
+    call_php_insert("get_repos","");
+ 
+}

@@ -4,7 +4,7 @@
 $f = filter_input(INPUT_GET,"f",FILTER_SANITIZE_STRING);
 $args = filter_input(INPUT_GET,"args",FILTER_SANITIZE_STRING);
 
-$whitelist = ["get_projects","get_header","get_footer"];
+$whitelist = ["get_projects","get_header","get_footer","get_repos"];
 if (in_array($f,$whitelist))
 {
     if (function_exists($f))
@@ -96,3 +96,26 @@ function get_footer(){
     
 }
 
+
+function get_repos()
+{
+    
+    $opts  = array('http' => array('user_agent' => 'Stwend'));
+    
+    $context = stream_context_create($opts);
+    
+    $res = json_decode(file_get_contents("https://api.github.com/users/stwend/repos",false,$context),true);
+    
+    $projects = [];
+    
+    foreach ($res as $project)
+    {
+        
+        $projects[] = $project['name'];
+        
+    }
+    
+    return implode(', ',$projects);
+    
+    
+}
