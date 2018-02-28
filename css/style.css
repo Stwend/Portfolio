@@ -1,0 +1,265 @@
+:root {
+    --col: #fff;
+    --complement: #333;
+    --lowcontrast: #eee;
+    --highcontrast: #777;
+    --menu_line_h: 1px;
+    --col_num_Content: 5;
+    --element_size_Content: 325px;
+    --contentHeight: 1px;
+  
+}
+
+
+@font-face { font-family: 'title';
+             src: url('../res/ostrich-regular.ttf') format('truetype'); }
+
+
+a {
+    
+    color: var(--complement);
+    
+}
+
+
+body {
+    
+    background-image: url("../images/replacethis.svg");
+    background-position: right top;
+    background-size:cover;
+}
+
+
+.header {
+    
+    margin: 0;
+    width: 100%;
+    height: 170px;
+    font-family: 'Chivo', sans-serif;
+    font-weight: 300;
+    font-size: 13pt;
+    overflow: hidden;
+}
+
+.title {
+    
+    position: absolute;
+    margin-top: 0px;
+    margin-left: 57px;
+    width: 500px;
+    height: 120px;
+    font-family: title, sans-serif;
+    font-size: 65pt;
+    color: var(--complement);
+    overflow: hidden;
+    line-height: 120px;
+}
+
+
+.menu_container {
+    
+    margin-top: 150px;
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    margin-left: -15px;
+    white-space: nowrap;
+    display: flex;
+    overflow: hidden;
+}
+
+
+.menu_spacer {
+    
+    width: 20px;
+    height: var(--menu_line_h);
+    margin: 0px;
+    margin-top: 16px;
+    background-color: var(--complement);
+    display: inline-flex;
+    vertical-align: middle;
+    flex-shrink: 0
+}
+
+.menu_spacer_invis {
+    
+    width: 10px;
+    height: var(--menu_line_h);
+    margin: 0px;
+    margin-top: 16px;
+    display: inline-flex;
+    vertical-align: middle;
+    flex-shrink: 0
+}
+
+
+.menu_spacer_left {
+    
+    width: 150px;
+    height: var(--menu_line_h);
+    margin: 0px;
+    margin-top: 16px;
+    //background-color: var(--complement);
+    display: inline-flex;
+    vertical-align: middle;
+    flex-shrink: 0
+    
+}
+
+.menu_spacer_right {
+    
+    width: 350px;
+    height: var(--menu_line_h);
+    margin: 0px;
+    margin-top: 16px;
+    background-color: var(--complement);
+    display: inline-flex;
+    vertical-align: middle;
+    flex-shrink: 0
+}
+
+.menu_spacer_fin {
+    
+    align-self: stretch;
+    width:100%;
+    height: var(--menu_line_h);
+    margin: 0px;
+    margin-top: 16px;
+    margin-right:49px;
+    background-color: var(--complement);
+    display:compact;
+    vertical-align: middle;
+    
+}
+
+.menu_item_inactive {
+    
+    height: 26px;
+    padding: 5px 10px 0px 10px;
+    margin: 0px;
+    display: inline-block;
+    text-align: center;
+    flex-shrink: 0
+}
+
+.menu_item_inactive:hover, .menu_item_active {
+    
+    position: relative;
+    height: 26px;
+    padding: 5px 10px 0px 10px;
+    margin: 0px;
+    background-color: var(--complement);
+    color: var(--col);
+    display: inline-block;
+    text-align: center;
+    flex-shrink: 0
+}
+
+.icon_item {
+    
+    position: relative;
+    height: 26px;
+    width: 26px;
+    margin: 0px;
+    margin-top:4px;
+    display: inline-block;
+    text-align: center;
+    flex-shrink: 0
+}
+
+#icon_artst {
+    
+    background-image: url('../images/artstation.png');
+    
+}
+
+#icon_artst:hover {
+    
+    background-image: url('../images/artstation_hov.png');
+    
+}
+
+#icon_linked {
+    
+    background-image: url('../images/lin.png');
+    
+}
+
+#icon_linked:hover {
+    
+    background-image: url('../images/lin_hov.png');
+    
+}
+
+#icon_xing {
+    
+    background-image: url('../images/xing.png');
+    
+}
+
+#icon_xing:hover {
+    
+    background-image: url('../images/xing_hov.png');
+    
+}
+
+#icon_git {
+    
+    background-image: url('../images/git.png');
+    
+}
+
+#icon_git:hover {
+    
+    background-image: url('../images/git_hov.png');
+    
+}
+
+#icon_mail {
+    
+    background-image: url('../images/mail.png');
+    
+}
+
+#icon_mail:hover {
+    
+    background-image: url('../images/mail_hov.png');
+    
+}
+
+
+.content_block {
+    width: 100%;
+    height: var(--contentHeight);
+}
+
+
+.content_wrapper {
+    
+    margin: 100px 0px 90px 54px;
+    position: absolute;
+    width: calc(100% - 120px);
+    display: grid;
+    grid-gap: 38px;
+    grid-template-columns: repeat(var(--col_num_Content), auto);
+    grid-auto-flow: row;
+    justify-content: start;
+}
+
+.content {
+    
+    width: var(--element_size_Content);
+    height: var(--element_size_Content);
+    background-color: var(--lowcontrast);
+    grid-column-start: auto;
+    grid-row-start: auto;
+    border-style: dashed;
+    border-width:1px;
+    border-color: var(--highcontrast);
+}
+
+.footer_wrapper {
+    background-color: black;
+    height:50px;
+    margin: 0px 49px 0px 54px;
+}
