@@ -97,8 +97,30 @@ function get_footer(){
 }
 
 
+//stores the latest repos from Github in a file (formatted to neat HTML) and adds a timestamp. Only accesses GitHub if the last access was more than 1 hour ago.
+//file storing/timestamping/updating should be pulled out into a set of generic functions for storage/access, also need to add failsafes (files missing etc).
 function get_repos()
 {
+    $file = dirname( dirname(__FILE__) ).'\\res\\repos.store';
+    $datefile = dirname( dirname(__FILE__) ).'\\res\\repos.store.date';
+    
+    $passed = strtotime(date('Y-m-d H:i:s')) - strtotime(file_get_contents($datefile));
+    
+    if(($passed/3600)>=1)
+    {
+        update_repos();
+    }
+    
+    return file_get_contents($file);
+    
+    
+}
+
+function update_repos()
+{
+    
+    $file = dirname( dirname(__FILE__) ).'\\res\\repos.store';
+    $datefile = dirname( dirname(__FILE__) ).'\\res\\repos.store.date';
     
     $opts  = array('http' => array('user_agent' => 'Stwend'));
     
@@ -115,7 +137,8 @@ function get_repos()
         
     }
     
-    return implode(', ',$projects);
-    
+    file_put_contents ($file , implode(', ',$projects));
+    file_put_contents ($datefile , date('Y-m-d H:i:s'));
+ 
     
 }

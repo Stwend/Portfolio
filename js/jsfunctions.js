@@ -1,3 +1,6 @@
+//Since global vars often need to be passed as references, they are put into objects, always as a "data"
+var github_store = {data: "ayy"};
+
 
 function call_php_insert(code,args)
 {  
@@ -9,6 +12,19 @@ function call_php_insert(code,args)
     request.open("GET", "php/phpfunctions.php?f=" + code + "&args=" + args, false);
     request.send();
 }
+
+function call_php_store(code,args,storeob,callback)
+{  
+    var request =  (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');  // XMLHttpRequest instance
+  
+    request.onload = function() {
+            storeob.data = request.responseText;
+            eval(callback);
+    }
+    request.open("GET", "php/phpfunctions.php?f=" + code + "&args=" + args, false);
+    request.send();
+}
+
 
 function calc_contentgrid()
 {
@@ -28,8 +44,10 @@ function get_footer()
     document.documentElement.style.setProperty('--contentHeight',document.body.scrollHeight-100);
 }
 
+
 function get_repos()
 {
-    call_php_insert("get_repos","");
- 
+
+    call_php_store("get_repos","",github_store,'document.write(github_store.data);');
+
 }
