@@ -101,8 +101,12 @@ function get_footer(){
 //file storing/timestamping/updating should be pulled out into a set of generic functions for storage/access, also need to add failsafes (files missing etc).
 function get_repos()
 {
+    
+    //resource files
     $file = dirname( dirname(__FILE__) ).'\\res\\repos.store';
+    $othersfile = dirname( dirname(__FILE__) ).'\\res\\codingprojects.store';
     $datefile = dirname( dirname(__FILE__) ).'\\res\\repos.store.date';
+    $langfile = dirname( dirname(__FILE__) ).'\\res\\repos.lang.store';
     
     $passed = strtotime(date('Y-m-d H:i:s')) - strtotime(file_get_contents($datefile));
     
@@ -111,33 +115,128 @@ function get_repos()
         update_repos();
     }
     
-    return file_get_contents($file);
+    
+    //Get GitHub projects
+    $content = json_decode(file_get_contents($file),true);
+    $text = '<div class = "content_coding">'
+            . '<div class = "content_coding_header_img">'
+            . '<img src = "images/git_big.png">'
+            . '</div>'
+            . '<div class = "content_coding_header">'
+            . 'GitHub Projects'
+            . '</div>'
+            . '<div class = "menu_spacer_submenu">'
+            . '</div>';
+    
+    $langs = explode('*',file_get_contents($langfile));
     
     
+    $i = 0;
+    foreach ($content as $item)
+    {
+        $name = $item['name'];
+        
+        $cont = json_decode($langs[$i],true);
+        
+        $lang = implode(', ',array_keys($cont));
+        
+        $descr = $item['description'];
+        $url = $item['html_url'];
+        $text = $text.'<a target="_blank" href="'.$url.'">'
+                . '<div class="content_coding_item">'
+                . '<div class="content_headline">'
+                .$name
+                .'</div>'
+                . '<div class="content_subheadline">'
+                .$lang
+                .'<div class = "content_description">'
+                .$descr
+                .'</div>'
+                . '</div>'
+                . '</div>'
+                . '</a>'
+                . '<br>';
+    
+        $i++;
+        
+    }
+    
+    $text2 = '<div class = "content_coding">'
+            . '<div class = "content_coding_header_img">'
+            . '<img src = "images/coding_other_big.png">'
+            . '</div>'
+            . '<div class = "content_coding_header">'
+            . 'Other Projects'
+            . '</div>'
+            . '<div class = "menu_spacer_submenu">'
+            . '</div>';
+    
+    //Get other projects from JSON file
+    $content = json_decode(file_get_contents($othersfile),true);
+    
+    foreach ($content as $item)
+    {
+        
+        $name = $item['name'];
+        
+        $lang = $item['languages'];
+        
+        $descr = $item['description'];
+        
+        $url = $item['href'];
+        
+        $text2 = $text2.'<a target="_blank" href="'
+                .$url
+                .'"><div class="content_coding_item"><div class="content_headline">'
+                .$name
+                .'</div><div class="content_subheadline">'
+                .$lang
+                .'<div class = "content_description">'
+                .$descr.
+                '</div></div></div></a><br>';
+
+    }
+    
+    
+    
+    
+    $text= $text.'</div><br><br><br>'.$text2.'</div><br><br><br>';
+    
+    return $text;
 }
+
 
 function update_repos()
 {
     
     $file = dirname( dirname(__FILE__) ).'\\res\\repos.store';
+    $langfile = dirname( dirname(__FILE__) ).'\\res\\repos.lang.store';
     $datefile = dirname( dirname(__FILE__) ).'\\res\\repos.store.date';
     
     $opts  = array('http' => array('user_agent' => 'Stwend'));
     
     $context = stream_context_create($opts);
     
-    $res = json_decode(file_get_contents("https://api.github.com/users/stwend/repos",false,$context),true);
+    $res = file_get_contents("https://api.github.com/users/stwend/repos",false,$context);
     
-    $projects = [];
+    $dec = json_decode($res,true);
     
-    foreach ($res as $project)
+    $langlist = "";
+    
+    foreach ($dec as $item)
     {
         
-        $projects[] = $project['name'];
-        
+        $langurl = $item['languages_url'];
+        $langlist = $langlist.file_get_contents($langurl,false,$context).'*';
+   
     }
     
-    file_put_contents ($file , implode(', ',$projects));
+
+    
+    
+    
+    file_put_contents ($langfile , $langlist);
+    file_put_contents ($file , $res);
     file_put_contents ($datefile , date('Y-m-d H:i:s'));
  
     

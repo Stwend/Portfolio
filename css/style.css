@@ -2,6 +2,7 @@
     --col: #fff;
     --complement: #333;
     --lowcontrast: #eee;
+    --mediumcontrast: #bbb;
     --highcontrast: #777;
     --menu_line_h: 1px;
     --col_num_Content: 5;
@@ -18,6 +19,7 @@
 a {
     
     color: var(--complement);
+    text-decoration: none;
     
 }
 
@@ -76,6 +78,19 @@ body {
     margin: 0px;
     margin-top: 16px;
     background-color: var(--complement);
+    display: inline-flex;
+    vertical-align: middle;
+    flex-shrink: 0
+}
+
+.menu_spacer_submenu {
+    
+    width: 300px;
+    height: var(--menu_line_h);
+    margin: 0px;
+    margin-top: 16px;
+    margin-left: 99px;
+    background-color: var(--mediumcontrast);
     display: inline-flex;
     vertical-align: middle;
     flex-shrink: 0
@@ -238,13 +253,24 @@ body {
     
     margin: 100px 0px 90px 54px;
     position: absolute;
-    width: calc(100% - 120px);
+    width: calc(100% - 110px);
     display: grid;
     grid-gap: 38px;
     grid-template-columns: repeat(var(--col_num_Content), auto);
     grid-auto-flow: row;
     justify-content: start;
+    overflow: hidden;
 }
+
+
+.content_wrapper_exp {
+    
+    margin: 100px 0px 90px 54px;
+    position: absolute;
+    width: calc(100% - 120px);
+    overflow: hidden;
+}
+
 
 .content {
     
@@ -257,6 +283,89 @@ body {
     border-width:1px;
     border-color: var(--highcontrast);
 }
+
+.content_content {
+    
+    width: var(--element_size_Content);
+    height: 150px;
+    margin-top: 145px;
+    text-align: center;
+    font-family: 'Chivo', sans-serif;
+    font-size: 16pt;
+    
+}
+
+.content_coding_item {
+    
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-family: 'Chivo', sans-serif;
+    margin-left: 80px;
+    padding:20px;
+}
+
+
+.content_coding_item:hover {
+    
+    background-color: var(--lowcontrast);
+}
+
+
+
+
+.content_coding {
+    
+    width: 1000px;
+    
+    
+}
+
+.content_coding_header {
+    
+    margin-top: 0px;
+    margin-left: 50px;
+    font-family: 'Chivo', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    color: var(--complement);
+    width:500px;
+    line-height: 30px;
+}
+
+.content_coding_header_img {
+    
+    width:30px;
+    height:30px;
+    margin-right:20px;
+    margin-left:49px;
+    font-family: 'Chivo', sans-serif;
+    font-size: 26px;
+    color: var(--complement);
+    float:left;
+}
+
+.content_headline {
+    
+    font-size: 26pt;
+    color: var(--complement);
+    
+}
+
+.content_subheadline {
+    
+    margin-top:2px;
+    font-size: 16pt;
+    color: var(--highcontrast);
+    
+}
+
+.content_description {
+    
+    font-size: 12pt; 
+    margin-top:15px;
+    color: var(--complement);
+}
+
 
 .footer_wrapper {
     background-color: black;

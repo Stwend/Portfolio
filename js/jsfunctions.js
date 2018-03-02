@@ -2,25 +2,20 @@
 var github_store = {data: "ayy"};
 
 
-function call_php_insert(code,args)
+//code & args are passed to php, after receiving the php data callback is called, option to store data in a variable object.
+//request.responseText can also be used inside the callback code.
+function call_php(code,args,callback,storeob=null)
 {  
     var request =  (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');  // XMLHttpRequest instance
   
     request.onload = function() {
-            document.write(request.responseText);
-    }
-    request.open("GET", "php/phpfunctions.php?f=" + code + "&args=" + args, false);
-    request.send();
-}
-
-function call_php_store(code,args,storeob,callback)
-{  
-    var request =  (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');  // XMLHttpRequest instance
-  
-    request.onload = function() {
-            storeob.data = request.responseText;
+            if (storeob != null)
+            {
+                storeob.data = request.responseText;
+            }
             eval(callback);
-    }
+            
+    };
     request.open("GET", "php/phpfunctions.php?f=" + code + "&args=" + args, false);
     request.send();
 }
@@ -35,12 +30,12 @@ function calc_contentgrid()
 
 function get_header(hlitem)
 {
-    call_php_insert("get_header",hlitem);
+    call_php("get_header",hlitem,"document.write(request.responseText);");
 }
 
 function get_footer()
 {
-    call_php_insert("get_footer","");
+    call_php("get_footer","","document.write(request.responseText);");
     document.documentElement.style.setProperty('--contentHeight',document.body.scrollHeight-100);
 }
 
@@ -48,6 +43,6 @@ function get_footer()
 function get_repos()
 {
 
-    call_php_store("get_repos","",github_store,'document.write(github_store.data);');
+    call_php("get_repos","",'document.write(github_store.data);',github_store);
 
 }
