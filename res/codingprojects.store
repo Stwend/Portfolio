@@ -1,1 +1,15 @@
-[{"name":"Testprojekt","href":"#","languages":"C, C++, Java","description":"Just testing something."},{"name":"Testprojekt2","href":"#","languages":"AYY, LMAO","description":"Lorem ipsum dolor sit amet"}]
+[
+    {
+        "name":"Testprojekt",
+        "href":"#",
+        "languages":"C, C++, Java",
+        "description":"Just testing something."
+    },
+    
+    {
+        "name":"Testprojekt2",
+        "href":"#",
+        "languages":"AYY, LMAO",
+        "description":"Lorem ipsum dolor sit amet"
+    }
+]
