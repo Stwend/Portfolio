@@ -394,6 +394,7 @@ body {
 
     height: 200px;
     display:flex;
+    margin-top:0px;
     
 }
 
@@ -416,17 +417,18 @@ body {
     color: var(--complement);
     height: 200px;
     width: 1200px;
-    margin: 30px 0px 0px 80px;
+    margin: 10px 0px 0px 80px;
     
 }
 
 
 .skillsheader {
     
-    margin: 80px 20px 0px 80px;
+    margin: 100px 280px 50px 0px;
     font-family: 'Chivo', sans-serif;
     font-size: 30pt;
     color: var(--complement);
+    text-align: center;
     
 }
 
@@ -434,7 +436,7 @@ body {
 .skillsblock {
     
     font-family: 'Chivo', sans-serif;
-    margin: 30px 20px 0px 80px;
+    margin: 40px 200px 50px 0px;
     
     width: 1500px;
     display:flex;
@@ -446,19 +448,44 @@ body {
     
     font-size: 22pt;
     color: var(--highcontrast);
+    text-align: center;
     
 }
 
 
-.skills_software {
+.skills_list {
     
     width: 750px;
     
 }
 
-.skills_programming {
+.skills_list_body {
     
-    width: 750px;
+    margin: 60px 10px 10px 120px;
+    
+}
+
+.skills_list_item {
+    
+    margin: 0px 0px 0px 0px;
+    font-size: 18px;
+    display:flex;
+    padding: 15px 15px 15px 15px;
+    
+}
+
+
+.skills_list_item_text {
+    
+    width:280px;
+    
+}
+
+
+.skills_list_item_stars {
+    
+    width:260px;
+    background-color: var(--lowcontrast);
     
 }
 

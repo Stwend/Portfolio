@@ -46,3 +46,15 @@ function get_repos()
     call_php("get_repos","",'document.write(github_store.data);',github_store);
 
 }
+
+function get_skills()
+{  
+    call_php("get_skills","",'write_skills(request.responseText);');
+
+}
+
+function write_skills(s)
+{
+    document.getElementById("list_software").innerHTML = "<div class='skills_list_item'><div class='skills_list_item_text'>Maya</div><div class='skills_list_item_stars'>asd</div></div>";
+    
+}
