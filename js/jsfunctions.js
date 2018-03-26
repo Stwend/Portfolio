@@ -4,7 +4,7 @@ var github_store = {data: "ayy"};
 
 //code & args are passed to php, after receiving the php data callback is called, option to store data in a variable object.
 //request.responseText can also be used inside the callback code.
-function call_php(code,args,callback,storeob=null)
+function call_php(code,args,callback,async=false,storeob=null)
 {  
     var request =  (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');  // XMLHttpRequest instance
   
@@ -16,7 +16,7 @@ function call_php(code,args,callback,storeob=null)
             eval(callback);
             
     };
-    request.open("GET", "php/phpfunctions.php?f=" + code + "&args=" + args, false);
+    request.open("GET", "php/phpfunctions.php?f=" + code + "&args=" + args, false, async);
     request.send();
 }
 
@@ -36,16 +36,27 @@ function get_header(hlitem)
 function get_footer()
 {
     call_php("get_footer","","document.write(request.responseText);");
-    document.documentElement.style.setProperty('--contentHeight',document.body.scrollHeight-100);
+    update_height();
 }
 
 
 function get_repos()
 {
 
-    call_php("get_repos","",'document.write(github_store.data);',github_store);
+    call_php("get_repos","",'write_callback(github_store.data,"repos_ip")',true, github_store);
 
 }
+
+
+function write_callback(data,id)
+{
+    
+    var elem = document.getElementById(id);
+    elem.innerHTML = data;
+    update_height();
+    
+}
+
 
 function get_skills()
 {  
@@ -55,6 +66,41 @@ function get_skills()
 
 function write_skills(s)
 {
-    document.getElementById("list_software").innerHTML = "<div class='skills_list_item'><div class='skills_list_item_text'>Maya</div><div class='skills_list_item_stars'>asd</div></div>";
+    document.getElementById("skills_ip").innerHTML = s;
+    
+}
+
+
+function info_popup(obj)
+{
+    var obj2 = document.createElement('div');
+    obj2.className = 'skills_list_item_infowrapper';
+    obj2.innerHTML = "Did: <div class='skills_info_item_sub'>" + obj.getAttribute("descr") + "</div>";
+    
+    var used = obj.getAttribute("rel");
+    
+    if(used != "")
+    {
+        
+        obj2.innerHTML += "<br> Used: <div class='skills_info_item_sub'>" + used + "</div>"
+        
+    }
+    
+    obj.appendChild(obj2);
+    
+}
+
+function hide_info(obj)
+{
+    
+    obj.innerHTML = "<div style='width:20px;height:20px;'></div>";
+    
+}
+
+
+function update_height()
+{
+    
+    document.documentElement.style.setProperty('--contentHeight',document.body.scrollHeight-100);
     
 }

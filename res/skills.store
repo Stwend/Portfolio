@@ -1,74 +1,74 @@
-[
-    
+[[
+
     {
         "name":"Maya",
         "stars": 3,
-        "description": "Hard Surface Modeling, Rigging, Animating, Scripting"
+        "description": "Hard Surface Modeling, Rigging, Animating, Scripting, UVs",
         "related": "Simplygon"
     },
     
     {
         "name":"Blender",
         "stars": 5,
-        "description": "Hard Surface Modeling, Sculpting, Rigging, Animating, Physics Simulation, Texturing, Rendering, Video Editing, Scripting"
+        "description": "Hard Surface Modeling, Sculpting, Rigging, Animating, Physics Simulation, Texturing, Rendering, Video Editing, Scripting, UVs",
         "related": ""
     },
     
     {
         "name":"Substance Designer/Painter",
         "stars": 4,
-        "description": "Texturing"
+        "description": "Texturing",
         "related": ""
     },
     
     {
         "name":"Mari",
         "stars": 2,
-        "description": "Texturing, UDIMs"
+        "description": "Texturing, UDIMs",
         "related": ""
     },
     
     {
         "name":"Simplygon",
         "stars": 3,
-        "description": "Polygon reduction"
+        "description": "Polygon reduction",
         "related": ""
     },
     
     {
         "name":"Unity 3D",
         "stars": 3,
-        "description": "A 2-month VR game project in university, several projects at current workplace"
+        "description": "A 2-month VR game project in university, several projects at current workplace",
         "related": ""
     },
     
     {
         "name":"Unreal Engine 4",
         "stars": 2,
-        "description": "Several projects at current workplace"
+        "description": "Several projects at current workplace",
         "related": ""
     },
     
     {
         "name":"DeltaGen",
         "stars": 3,
-        "description": "Dataprep, Materials"
+        "description": "Dataprep, Materials, Logic Network, Reduction, UVs",
         "related": ""
     },
     
     {
         "name":"Visual Studio",
         "stars": 2,
-        "description": "Several small projects"
+        "description": "Several small projects",
         "related": ""
     },
     
     {
         "name":"Various minor tools",
-        "stars": 5,
-        "description": "A few tools, offline and online, I picked up to use for organisation or as small helpers"
+        "stars": 3,
+        "description": "A few tools, offline and online, which I picked up to use for organizing my work or as small helpers",
         "related": "Outlook, Excel, JIRA, Git, XNormal, PyCharm, CLion, Eclipse IDE, GIMP, Krita"
-    },
+    }
   
 ],
 
@@ -77,52 +77,59 @@
     {
         "name":"Python",
         "stars": 3,
-        "description": "several small to mid sized Maya & Blender plugins"
+        "description": "several small to mid sized Maya & Blender plugins",
         "related": "NumPy, Blender API, Maya API"
     },
     
     {
         "name":"C++",
         "stars": 2,
-        "description": "A few small side projects."
+        "description": "A few side projects.",
         "related": "Qt"
-    },
-    
-    {
-        "name":"C",
-        "stars": 1,
-        "description": "Only the basics, University level."
-        "related": ""
     },
   
     {
         "name":"C#",
         "stars": 2,
-        "description": "A mid-sized Unity game project with VR support."
+        "description": "A mid-sized Unity game project with VR support.",
         "related": "Unity 3D/MonoDevelop"
     },
     
     {
         "name":"Java",
         "stars": 1,
-        "description": "Only the basics, University level"
+        "description": "University courses and a small side project.",
         "related": "JDBC"
     },
     
     {
         "name":"Javascript",
         "stars": 2,
-        "description": "Several web frontend projects, including this website."
+        "description": "Several web frontend projects, including this website.",
         "related": "JQuery, Json"
     },
     
     {
         "name":"PHP",
         "stars": 1,
-        "description": "Only the basics, simple backend stuff."
+        "description": "Only the basics, simple backend stuff.",
         "related": "Json"
     },
     
+    {
+        "name":"HTML",
+        "stars": 3,
+        "description": "Several personal projects.",
+        "related": "CSS, Json, Javascript, PHP"
+    },
+    
+    {
+        "name":"Others",
+        "stars": 1,
+        "description": "A few languages where I don't consider myself skilled enough to warrant a place on the list.",
+        "related": "C"
+    }
+    
     
   
-]
+]]

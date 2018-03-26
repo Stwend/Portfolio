@@ -12,12 +12,21 @@
         <script>get_header("exp");</script>
         
         <div class="content_block">
-            <div class="content_wrapper_exp">
-                <script>get_repos();</script>
+            <div class="content_wrapper_exp" id="repos_ip">
+                
+                <div class="content_loader_wrapper">
+                    
+                    <div class="content_loader"></div>
+                    <div class="content_loader_text">Fetching repositories...</div>
+                    
+                </div>
+                
+                
             </div>
+            
         </div>
         
-        <script>calc_contentgrid();get_footer();</script>
+        <script>get_footer();get_repos();</script>
         
         
     </body>
