@@ -6,7 +6,7 @@ var skills_store = {data: "ayy"};
 
 //code & args are passed to php, after receiving the php data callback is called, option to store data in a variable object.
 //request.responseText can also be used inside the callback code.
-function call_php(code,args,callback,async=false,storeob=null)
+async function callPhp(code,args,callback,async=false,storeob=null)
 {  
     
     
@@ -27,16 +27,15 @@ function call_php(code,args,callback,async=false,storeob=null)
 }
 
 
-function calc_contentgrid()
+function calcContentgrid()
 {
     var num = Math.round((document.body.clientWidth-250)/363);
     document.documentElement.style.setProperty('--col_num_Content', num);
 }
 
 
-function get_header(hlitem)
+function drawHeader(highlight_item)
 {
-    //call_php("get_header",hlitem,"document.write(request.responseText);");
     
     
     var pre_item = '<div class="header"><a href="index.html"><div class="title">STEFAN WENDLING</div></a><div class="menu_container"><div class="menu_spacer_left"></div>';
@@ -58,7 +57,7 @@ function get_header(hlitem)
     
     var item = '';
     
-    if (hlitem == 'work')
+    if (highlight_item == 'work')
     {
         item = '<a href="index.html"><div class="menu_item_active">&nbsp 3D &nbsp</div></a>'
                 +'<div class="menu_spacer"></div>'
@@ -66,7 +65,7 @@ function get_header(hlitem)
                 +'<div class="menu_spacer"></div>'
                 +'<a href="about.html"><div class="menu_item_inactive">&nbsp ABOUT &nbsp</div></a>';
         
-    } else if (hlitem == 'exp')
+    } else if (highlight_item == 'exp')
     {
         
         item = '<a href="index.html"><div class="menu_item_inactive">&nbsp 3D &nbsp</div></a>'
@@ -91,14 +90,14 @@ function get_header(hlitem)
     
 }
 
-function get_footer()
+function drawFooter()
 {
-    document.write('<div class="footer_wrapper">ayy lmao</div>');
-    update_height();
+    document.write('<div class="footer_wrapper"><div class="footer_line"></div><div class="footer_content"><div class="footer_copyright">All works (c) Stefan Wendling 2018.</div><div class="footer_contact">Contact | Impressum</div></div></div>');
+    updateHeight();
 }
 
 
-async function get_repos()
+async function drawRepos()
 {
 
     
@@ -114,14 +113,14 @@ async function get_repos()
           
     other.innerHTML = git.innerHTML;
     
-    call_php("get_repos_local","",'write_callback(local_repo_store.data,"other_entry",true)',true, local_repo_store);
-    call_php("get_repos","",'write_callback(github_store.data,"git_entry",true)',true, github_store);
+    callPhp("getReposLocal","",'writeCallback(local_repo_store.data,"other_entry",true)',true, local_repo_store);
+    callPhp("getRepos","",'writeCallback(github_store.data,"git_entry",true)',true, github_store);
     
 
 }
 
 
-function write_callback(data,id,replace = true)
+function writeCallback(data,id,replace = true)
 {
     
     var elem = document.getElementById(id);
@@ -132,38 +131,38 @@ function write_callback(data,id,replace = true)
     {
         elem.innerHTML += data;
     }
-    update_height();
+    updateHeight();
     
 }
 
 
-async function get_skills()
+async function drawSkills()
 {  
-    call_php("get_skills","",'write_callback(skills_store.data, "skills_ip", true)',true,skills_store);
+    callPhp("getSkills","",'writeCallback(skills_store.data, "skills_ip", true)',true,skills_store);
 
 }
 
 
-function info_popup(obj)
+function drawInfoPopup(obj)
 {
-    var obj2 = document.createElement('div');
-    obj2.className = 'skills_list_item_infowrapper';
-    obj2.innerHTML = "Did: <div class='skills_info_item_sub'>" + obj.getAttribute("descr") + "</div>";
+    var popup = document.createElement('div');
+    popup.className = 'skills_list_item_infowrapper';
+    popup.innerHTML = "Did: <div class='skills_info_item_sub'>" + obj.getAttribute("descr") + "</div>";
     
     var used = obj.getAttribute("rel");
     
     if(used != "")
     {
         
-        obj2.innerHTML += "<br> Used: <div class='skills_info_item_sub'>" + used + "</div>"
+        popup.innerHTML += "<br> Used: <div class='skills_info_item_sub'>" + used + "</div>"
         
     }
     
-    obj.appendChild(obj2);
+    obj.appendChild(popup);
     
 }
 
-function hide_info(obj)
+function removeInfoPopup(obj)
 {
     
     obj.innerHTML = "<div style='width:20px;height:20px;'></div>";
@@ -171,7 +170,7 @@ function hide_info(obj)
 }
 
 
-function update_height()
+function updateHeight()
 {
     
     document.documentElement.style.setProperty('--contentHeight',document.body.scrollHeight-100);

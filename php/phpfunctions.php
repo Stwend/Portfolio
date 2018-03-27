@@ -4,7 +4,7 @@
 $f = filter_input(INPUT_GET,"f",FILTER_SANITIZE_STRING);
 $args = filter_input(INPUT_GET,"args",FILTER_SANITIZE_STRING);
 
-$whitelist = ["get_projects","get_repos","get_repos_local","get_skills"];
+$whitelist = ["getProjects","getRepos","getReposLocal","getSkills","sendMail"];
 if (in_array($f,$whitelist))
 {
     if (function_exists($f))
@@ -18,7 +18,7 @@ if (in_array($f,$whitelist))
 
 
 
-function get_projects()
+function getProjects()
 {
     $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\projects\\*"),"is_dir");
     $ar2 = array();
@@ -36,7 +36,7 @@ function get_projects()
 
 //stores the latest repos from Github in a file (formatted to neat HTML) and adds a timestamp. Only accesses GitHub if the last access was more than 1 hour ago.
 //file storing/timestamping/updating should be pulled out into a set of generic functions for storage/access, also need to add failsafes (files missing etc).
-function get_repos()
+function getRepos()
 {
     
     //resource files
@@ -48,7 +48,7 @@ function get_repos()
     
     if(($passed/3600)>=1)
     {
-        update_repos();
+        updateRepos();
     }
     
     
@@ -102,7 +102,7 @@ function get_repos()
     return $text;
 }
 
-function get_repos_local()
+function getReposLocal()
 {
     
     $othersfile = dirname( dirname(__FILE__) ).'\\res\\codingprojects.store';
@@ -142,7 +142,7 @@ function get_repos_local()
 }
 
 
-function update_repos()
+function updateRepos()
 {
     
     $file = dirname( dirname(__FILE__) ).'\\res\\repos.store';
@@ -179,7 +179,7 @@ function update_repos()
 }
 
 
-function get_skills()
+function getSkills()
 {
     
     $skillsfile = dirname( dirname(__FILE__) ).'\\res\\skills.store';
@@ -221,7 +221,7 @@ function get_skills()
         
         if (($description != "")||($related != ""))
         {
-            $rettext = $rettext.'<div class="skills_list_item_info" onmouseover="info_popup(this);" onmouseout="hide_info(this);" descr = "'.$description.'" rel = "'.$related.'"></div>';
+            $rettext = $rettext.'<div class="skills_list_item_info" onmouseover="drawInfoPopup(this);" onmouseout="removeInfoPopup(this);" descr = "'.$description.'" rel = "'.$related.'"></div>';
         }
             
         $rettext = $rettext.'</div>';
@@ -256,7 +256,7 @@ function get_skills()
             
         }
         
-        $rettext = $rettext.'</div><div class="skills_list_item_info" onmouseover="info_popup(this);" onmouseout="hide_info(this);" descr = "'.$item["description"].'" rel = "'.$item["related"].'"></div>';
+        $rettext = $rettext.'</div><div class="skills_list_item_info" onmouseover="drawInfoPopup(this);" onmouseout="removeInfoPopup(this);" descr = "'.$item["description"].'" rel = "'.$item["related"].'"></div>';
         
         $rettext = $rettext.'</div>';
         
@@ -265,6 +265,25 @@ function get_skills()
     
     
     return $rettext;
+    
+    
+}
+
+
+function sendMail($mode="default", $subject, $message)
+{
+    
+    if (mode=="error")
+    {
+        $to = "your_error@email.com"; 
+    } else if (mode=="default")
+    {
+        $to = "your_default@mail.com";
+    } else 
+    {return;}
+    
+    
+    mail($to, $subject, $message);
     
     
 }

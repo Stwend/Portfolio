@@ -1,4 +1,7 @@
 
+
+/*variables*/
+
 :root {
     --col: #fff;
     --complement: #333;
@@ -13,6 +16,7 @@
   
 }
 
+/*generic stuff*/
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -67,6 +71,10 @@ body {
     overflow: hidden;
     line-height: 120px;
 }
+
+
+/*MENU*/
+
 
 
 .menu_container {
@@ -193,6 +201,8 @@ body {
     flex-shrink: 0
 }
 
+/*MENU|Icons*/
+
 #icon_artst {
     
     background-image: url('../images/artstation.png');
@@ -254,7 +264,7 @@ body {
 }
 
 
-
+/*CONTENT*/
 
 
 .content_block {
@@ -307,6 +317,8 @@ body {
 }
 
 
+/*CONTENT|Animated content loader UI*/
+
 .content_loader_wrapper {
     
     width:500px;
@@ -353,6 +365,7 @@ body {
 }
 
 
+/*CONTENT|CODING*/
 
 
 .content_coding_item {
@@ -368,7 +381,7 @@ body {
 .content_coding_item_error {
     
     margin-bottom: 20px;
-    margin-top: 20px;
+    margin-top: 40px;
     font-family: 'Chivo', sans-serif;
     margin-left: 80px;
     padding:20px;
@@ -415,9 +428,12 @@ body {
     float:left;
 }
 
+
+
+
 .content_headline {
     
-    font-size: 26pt;
+    font-size: 22pt;
     color: var(--complement);
     
 }
@@ -425,7 +441,7 @@ body {
 .content_subheadline {
     
     margin-top:2px;
-    font-size: 16pt;
+    font-size: 14pt;
     color: var(--highcontrast);
     
 }
@@ -439,6 +455,7 @@ body {
 
 
 
+/*CONTENT|ABOUT*/
 
 .profileblock {
 
@@ -566,6 +583,8 @@ body {
     
 }
 
+/*CONTENT|Info Popup*/
+
 
 .skills_list_item_infowrapper {
     
@@ -589,10 +608,58 @@ body {
 
 
 
+/*FOOTER*/
 
 
 .footer_wrapper {
-    background-color: black;
     height: 50px;
-    margin: 0px 49px 0px 54px;
+    width:100%;
+    display: inline;
+    font-family: 'Chivo', sans-serif;
+    font-size: 12pt;
+    color: var(--highcontrast);
+    
+}
+
+.footer_line {
+    
+    background-color: var(--complement);
+    margin: 0px 50px 10px 50px;
+    width: calc(100%-100px);
+    height: 1px;
+    
+}
+
+.footer_content {
+    
+    height:48px;
+    width:100%;
+    display: flex;
+    
+}
+
+.footer_contact {
+    
+
+    vertical-align: middle;
+    margin-left: auto;
+    padding-left: 20px;
+    padding-right: 10px;
+    width:200px;
+    height: 48px;
+    line-height: 48px;
+    
+}
+
+.footer_copyright {
+    
+
+    margin-right:0px;
+    vertical-align: middle;
+    margin-right: auto;
+    padding-left: 56px;
+    width:400px;
+    height: 48px;
+    line-height: 48px;
+    
 }
