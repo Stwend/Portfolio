@@ -17,21 +17,21 @@
     {
         "name":"Substance Designer/Painter",
         "stars": 4,
-        "description": "Texturing",
+        "description": "",
         "related": ""
     },
     
     {
         "name":"Mari",
         "stars": 2,
-        "description": "Texturing, UDIMs",
-        "related": ""
+        "description": "Texturing",
+        "related": "UDIMs"
     },
     
     {
         "name":"Simplygon",
         "stars": 3,
-        "description": "Polygon reduction",
+        "description": "",
         "related": ""
     },
     
@@ -39,14 +39,14 @@
         "name":"Unity 3D",
         "stars": 3,
         "description": "A 2-month VR game project in university, several projects at current workplace",
-        "related": ""
+        "related": "C#"
     },
     
     {
         "name":"Unreal Engine 4",
         "stars": 2,
-        "description": "Several projects at current workplace",
-        "related": ""
+        "description": "Several small projects at current workplace",
+        "related": "C++"
     },
     
     {
@@ -60,14 +60,14 @@
         "name":"Visual Studio",
         "stars": 2,
         "description": "Several small projects",
-        "related": ""
+        "related": "C++, C#"
     },
     
     {
         "name":"Various minor tools",
         "stars": 3,
         "description": "A few tools, offline and online, which I picked up to use for organizing my work or as small helpers",
-        "related": "Outlook, Excel, JIRA, Git, XNormal, PyCharm, CLion, Eclipse IDE, GIMP, Krita"
+        "related": "Outlook, Excel, JIRA, Git, XNormal, PyCharm IDE, CLion IDE, Eclipse IDE, NetBeans IDE, GIMP, Krita"
     }
   
 ],
