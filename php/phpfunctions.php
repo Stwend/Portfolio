@@ -17,16 +17,25 @@ if (in_array($f,$whitelist))
 }
 
 
-
+//TODO: Sort by priority
 function getProjects()
 {
     $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\projects\\*"),"is_dir");
     $ar2 = array();
+    $txt = "";
     foreach ($ar as $item)
     {
-        $ar2[] = basename($item);
+        $f = $item.'\\config.json';
+        $item_rel = str_replace("\\","/",'projects'.explode("projects", $item)[1]);
+        $j = json_decode(file_get_contents($f),true);
+        $txt = $txt.'<a href = ""><div class="content" style=\'background-image: url("'.$item_rel.'/thumb.png");\'>'
+                .'<div class="content_title_wrapper"><div class="noselect content_title">'.$j["name"]
+                .'</div>'
+                .'</div>'
+                .'</div></a>';
+        
     }
-    return implode("|",$ar2);
+    return $txt;
 }
 
 
@@ -63,28 +72,19 @@ function getRepos()
         $i = 0;
         foreach ($content as $item)
         {
-            $name = $item['name'];
 
-            $cont = json_decode($langs[$i],true);
-
-            $lang = implode(', ',array_keys($cont));
-
-            $descr = $item['description'];
-            $url = $item['html_url'];
-            $text = $text.'<a target="_blank" href="'.$url.'">'
+            $languages_list = json_decode($langs[$i],true);
+            
+            $text = $text.'<a target="_blank" href="'.$item['html_url'].'">'
                     . '<div class="content_coding_item">'
                     . '<div class="content_headline">'
-                    .$name
+                    .$item['name']
                     .'</div>'
                     . '<div class="content_subheadline">'
-                    .$lang
+                    .implode(', ',array_keys($languages_list))
                     .'<div class = "content_description">'
-                    .$descr
-                    .'</div>'
-                    . '</div>'
-                    . '</div>'
-                    . '</a>'
-                    . '<br>';
+                    .$item['description']
+                    .'</div></div></div></a><br>';
 
             $i++;
 
@@ -115,22 +115,14 @@ function getReposLocal()
     foreach ($content as $item)
     {
         
-        $name = $item['name'];
-        
-        $lang = $item['languages'];
-        
-        $descr = $item['description'];
-        
-        $url = $item['href'];
-        
         $text2 = $text2.'<a target="_blank" href="'
-                .$url
+                .$item['href']
                 .'"><div class="content_coding_item"><div class="content_headline">'
-                .$name
+                .$item['name']
                 .'</div><div class="content_subheadline">'
-                .$lang
+                .$item['languages']
                 .'<div class = "content_description">'
-                .$descr.
+                .$item['description'].
                 '</div></div></div></a><br>';
 
     }
@@ -190,13 +182,13 @@ function getSkills()
     $sk_prog = $skills[1];
     
     $rettext = '<div class="skills_list">'
-                .'<div class="skills_list_header">Software</div>'
+                .'<div class="noselect skills_list_header">Software</div>'
                 .'<div class="skills_list_body">';
     
     
     foreach ($sk_soft as $item)
     {
-        $rettext = $rettext.'<div class="skills_list_item"><div class="skills_list_item_text">'.$item["name"].'</div>';
+        $rettext = $rettext.'<div class="noselect skills_list_item"><div class="skills_list_item_text">'.$item["name"].'</div>';
         $rettext = $rettext.'<div class="skills_list_item_stars">';
         
         $numstars = intval($item["stars"]);
@@ -221,7 +213,7 @@ function getSkills()
         
         if (($description != "")||($related != ""))
         {
-            $rettext = $rettext.'<div class="skills_list_item_info" onmouseover="drawInfoPopup(this);" onmouseout="removeInfoPopup(this);" descr = "'.$description.'" rel = "'.$related.'"></div>';
+            $rettext = $rettext.'<div class="skills_list_item_info" onmouseover="drawInfoPopupSkills(this);" onmouseout="removeInfoPopup(this);" info_descr = "'.$description.'" info_rel = "'.$related.'"></div>';
         }
             
         $rettext = $rettext.'</div>';
@@ -231,13 +223,13 @@ function getSkills()
     $rettext = $rettext.'</div></div>';
     
     $rettext = $rettext.'<div class="skills_list">'
-                .'<div class="skills_list_header">Languages</div>'
+                .'<div class="noselect skills_list_header">Languages</div>'
                 .'<div class="skills_list_body">';
     
     
     foreach ($sk_prog as $item)
     {
-        $rettext = $rettext.'<div class="skills_list_item"><div class="skills_list_item_text">'.$item["name"].'</div>';
+        $rettext = $rettext.'<div class="noselect skills_list_item"><div class="skills_list_item_text">'.$item["name"].'</div>';
         $rettext = $rettext.'<div class="skills_list_item_stars">';
         
         $numstars = intval($item["stars"]);
@@ -256,7 +248,7 @@ function getSkills()
             
         }
         
-        $rettext = $rettext.'</div><div class="skills_list_item_info" onmouseover="drawInfoPopup(this);" onmouseout="removeInfoPopup(this);" descr = "'.$item["description"].'" rel = "'.$item["related"].'"></div>';
+        $rettext = $rettext.'</div><div class="skills_list_item_info" onmouseover="drawInfoPopupSkills(this);" onmouseout="removeInfoPopup(this);" info_descr = "'.$item["description"].'" info_rel = "'.$item["related"].'"></div>';
         
         $rettext = $rettext.'</div>';
         

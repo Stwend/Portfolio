@@ -9,22 +9,17 @@
         <title>Stefan Wendling</title>
     </head>
     <body onresize="calc_contentgrid();">
-        <script>drawHeader("work");</script>
+        <div id="menu_entry" data-active="0"></div>
         
         <div class="content_block">
-            <div class="content_wrapper">
-                <div class="content"></div>
-                <div class="content"></div>
-                <div class="content"></div>
-                <div class="content"></div>
-                <div class="content"></div>
-                <div class="content"></div>
-                <div class="content"></div>
-                <div class="content"></div>
+            <div class="content_wrapper" id="projects_entry">
             </div>
         </div>
         
-        <script>calcContentgrid();drawFooter();</script>
+        <script>drawHeader();</script>
+        <script>drawProjects();</script>
+        <script>calcContentgrid();</script>
+        <script>drawFooter();</script>
         
         
     </body>

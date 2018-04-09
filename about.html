@@ -9,11 +9,11 @@
         <title>Stefan Wendling</title>
     </head>
     <body onresize="calc_contentgrid();">
-        <script>drawHeader("ayy");</script>
+        <div id="menu_entry" data-active="2"></div>
         
         <div class="content_block">
             <div class="content_wrapper_about">
-                <div class="profileblock">
+                <div class="noselect profileblock">
                     <div class="profilepic"></div>
                         <div class="profiletext">
                         
@@ -26,13 +26,13 @@
                             
                         </div>
                 </div>
-                <div class="skillsheader">Experience</div>
+                <div class="noselect skillsheader">Experience</div>
                 <div class="skillsblock" id="skills_ip">
                 </div>
             </div>
         </div>
         
-        <script>drawSkills();drawFooter();</script>
+        <script>drawHeader();drawSkills();drawFooter();</script>
         
         
         

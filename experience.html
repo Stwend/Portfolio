@@ -9,7 +9,7 @@
         <title>Stefan Wendling</title>
     </head>
     <body onresize="calc_contentgrid();">
-        <script>drawHeader("exp");</script>
+        <div id="menu_entry" data-active="1"></div>
         
         <div class="content_block">
             <div class="content_wrapper_exp">
@@ -17,7 +17,7 @@
                     <div class = "content_coding_header_img">
                         <img src = "images/git_big.png">
                     </div>
-                    <div class = "content_coding_header">
+                    <div class = "noselect content_coding_header">
                         GitHub Projects
                     </div>
                     <div class = "menu_spacer_submenu"></div>
@@ -32,7 +32,7 @@
                     <div class = "content_coding_header_img">
                         <img src = "images/coding_other_big.png">
                     </div>
-                    <div class = "content_coding_header">
+                    <div class = "noselect content_coding_header">
                         Other Projects
                     </div>
                     <div class = "menu_spacer_submenu"></div>
@@ -48,6 +48,7 @@
             
         </div>
         
+        <script>drawHeader();</script>
         <script>drawFooter();drawRepos();</script>
         
         

@@ -46,7 +46,7 @@
         "name":"Unreal Engine 4",
         "stars": 2,
         "description": "Several small projects at current workplace",
-        "related": "C++"
+        "related": ""
     },
     
     {
@@ -112,7 +112,7 @@
     {
         "name":"PHP",
         "stars": 1,
-        "description": "Only the basics, simple backend stuff.",
+        "description": "Only the basics, simple frontend stuff.",
         "related": "Json"
     },
     
