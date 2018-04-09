@@ -2,6 +2,7 @@
 var github_store = {data: "ayy"};
 var local_repo_store = {data: "ayy"};
 var skills_store = {data: "ayy"};
+var projects_store = {data: "ayy"};
 
 
 //code & args are passed to php, after receiving the php data callback is called, option to store data in a variable object.
@@ -15,7 +16,6 @@ async function callPhp(code,args,callback,async=false,storeob=null)
     request.onload = function() {
             if (storeob != null)
             {
-                storeob.date = new Date();
                 storeob.data = request.responseText;   
             }
             eval(callback);
@@ -34,65 +34,223 @@ function calcContentgrid()
 }
 
 
-function drawHeader(highlight_item)
+function drawHeader()
 {
     
+    var insert = document.getElementById("menu_entry");
+    var active = parseInt(insert.getAttribute("data-active"));
     
-    var pre_item = '<div class="header"><a href="index.html"><div class="title">STEFAN WENDLING</div></a><div class="menu_container"><div class="menu_spacer_left"></div>';
+    var link_header = document.createElement("a");
+    link_header.href = "index.html";
     
-    var post_item =  '<div class="menu_spacer_right"></div>'
-                +'<div class="menu_spacer_invis"></div>'
-                +'<a target="_blank" href="https://www.artstation.com/stefanwendling"><div class="icon_item" id="icon_artst"></div></a>'
-                +'<div class="menu_spacer_invis"></div>'
-                +'<a target="_blank" href="https://github.com/Stwend"><div class="icon_item" id="icon_git"></div></a>'
-                +'<div class="menu_spacer_invis"></div>'
-                +'<a target="_blank" href="https://www.xing.com/profile/Stefan_Wendling4"><div class="icon_item" id="icon_xing"></div></a>'
-                +'<div class="menu_spacer_invis"></div>'
-                +'<a target="_blank" href="https://www.linkedin.com/in/stefanwendling/"><div class="icon_item" id="icon_linked"></div></a>'
-                +'<div class="menu_spacer_invis"></div>'
-                +'<a href="mailto:stefan-wendling@web.de"><div class="icon_item" id="icon_mail"></div></a>'
-                +'<div class="menu_spacer_invis"></div>'
-                +'<div class="menu_spacer_fin"></div>'
-                +'</div></div>';
+    var div_header = document.createElement("div");
+    div_header.className = "header";
     
-    var item = '';
+    var div_title = document.createElement("div");
+    div_header.className = "title";
+    div_header.innerHTML = "STEFAN WENDLING";
     
-    if (highlight_item == 'work')
-    {
-        item = '<a href="index.html"><div class="menu_item_active">&nbsp 3D &nbsp</div></a>'
-                +'<div class="menu_spacer"></div>'
-                +'<a href="experience.html"><div class="menu_item_inactive">&nbsp PROGRAMMING &nbsp</div></a>'
-                +'<div class="menu_spacer"></div>'
-                +'<a href="about.html"><div class="menu_item_inactive">&nbsp ABOUT &nbsp</div></a>';
-        
-    } else if (highlight_item == 'exp')
+    var div_menucontainer = document.createElement("div");
+    div_menucontainer.className = "menu_container";
+    
+    var div_spacer_left = document.createElement("div");
+    div_spacer_left.className = "menu_spacer_invis";
+
+    div_menucontainer.appendChild(div_spacer_left);
+    
+    if (active < 3)
     {
         
-        item = '<a href="index.html"><div class="menu_item_inactive">&nbsp 3D &nbsp</div></a>'
-                +'<div class="menu_spacer"></div>'
-                +'<a href="experience.html"><div class="menu_item_active">&nbsp PROGRAMMING &nbsp</div></a>'
-                +'<div class="menu_spacer"></div>'
-                +'<a href="about.html"><div class="menu_item_inactive">&nbsp ABOUT &nbsp</div></a>';
+        div_spacer_left.style.width = "200px";
         
-    } else
+    } else 
     {
         
-        item = '<a href="index.html"><div class="menu_item_inactive">&nbsp 3D &nbsp</div></a>'
-                +'<div class="menu_spacer"></div>'
-                +'<a href="experience.html"><div class="menu_item_inactive">&nbsp PROGRAMMING &nbsp</div></a>'
-                +'<div class="menu_spacer"></div>'
-                +'<a href="about.html"><div class="menu_item_active">&nbsp ABOUT &nbsp</div></a>';
+        
+        div_spacer_left.style.width = "100px";
+        
+        var div_menu_back = document.createElement("div");
+        div_menu_back.className = "menu_item_back";
+        div_menu_back.innerHTML = "RETURN";
+        
+        var link_back = document.createElement("a");
+        
+        
+        if (active == 3)
+        {
+        
+            link_back.href = "../../index.html";
+        
+        } else if (active == 4)
+        {
+        
+            link_back.href = "../../experience.html";
+        
+        }
+        
+        var div_spacer_tiny = document.createElement("div");
+        div_spacer_tiny.className = "menu_spacer_invis";
+        div_spacer_tiny.style.width = "5px";
+        
+        
+        link_back.appendChild(div_menu_back);
+        
+        div_menucontainer.appendChild(link_back);
+        div_menucontainer.appendChild(div_spacer_tiny);
         
     }
     
     
-    document.write(pre_item + item + post_item);
+    
+    var link_work = document.createElement("a");
+    link_work.href = "index.html";
+    
+    var link_prog = link_work.cloneNode();
+    link_prog.href = "experience.html";
+    
+    var link_about = link_work.cloneNode();
+    link_about.href = "about.html";
+    
+    var div_work = document.createElement("div");
+    div_work.className = "menu_item_disabled";
+    div_work.innerHTML = "3D";
+    
+    var div_prog = div_work.cloneNode();
+    div_prog.innerHTML = "PROGRAMMING";
+    
+    var div_about = div_work.cloneNode();
+    div_about.innerHTML = "ABOUT";
+    
+    link_work.appendChild(div_work);
+    link_prog.appendChild(div_prog);
+    link_about.appendChild(div_about);
+    
+    if (active == 0)
+    {
+        
+        div_work.className = "menu_item_active";
+        
+    } else if (active == 1)
+    {
+        
+        div_prog.className = "menu_item_active";
+        
+    } else if (active == 2)
+    {
+        
+        div_about.className = "menu_item_active";
+        
+    } else if (active == 3)
+    {
+        
+        div_work.className = "menu_item_active_secondary";
+        
+    } else if (active == 4)
+    {
+        
+        div_prog.className = "menu_item_active_secondary";
+        
+    }
+    
+    var div_spacer_small = document.createElement("div");
+    div_spacer_small.className = "menu_spacer";
+    div_spacer_small.style.width = "20px";
+    
+    
+    var div_spacer_center = document.createElement("div");
+    div_spacer_center.className = "menu_spacer";
+    div_spacer_center.style.width = "250px";
+    
+    
+    
+    var link_artst = document.createElement("a");
+    link_artst.href = "https://www.artstation.com/stefanwendling";
+    link_artst.target = "blank";
+    
+    var link_git = link_artst.cloneNode();
+    link_git.href = "https://github.com/Stwend";
+    
+    var link_xing = link_artst.cloneNode();
+    link_xing.href = "https://www.xing.com/profile/Stefan_Wendling4";
+    
+    var link_lin = link_artst.cloneNode();
+    link_lin.href = "https://www.linkedin.com/in/stefanwendling/";
+    
+    var link_mail = link_artst.cloneNode();
+    link_mail.href = "mailto:stefan-wendling@web.de";
+    
+    var div_artst = document.createElement("div");
+    div_artst.className = "icon_item";
+    div_artst.id = "icon_artst";
+    
+    var div_git = div_artst.cloneNode();
+    div_git.id = "icon_git";
+    
+    var div_xing = div_artst.cloneNode();
+    div_xing.id = "icon_xing";
+    
+    var div_lin = div_artst.cloneNode();
+    div_lin.id = "icon_linked";
+    
+    var div_mail = div_artst.cloneNode();
+    div_mail.id = "icon_mail";
+    
+    link_artst.appendChild(div_artst);
+    link_git.appendChild(div_git);
+    link_xing.appendChild(div_xing);
+    link_lin.appendChild(div_lin);
+    link_mail.appendChild(div_mail);
+    
+    var div_spacer_icons = document.createElement("div");
+    div_spacer_icons.className = "menu_spacer_invis";
+    div_spacer_icons.style.width = "4px";
+    
+    var div_spacer_right = document.createElement("div");
+    div_spacer_right.className = "menu_spacer";
+    div_spacer_right.style.flexGrow = "1";
+    div_spacer_right.style.marginRight = "50px";
+    
+    
+    
+    
+    div_header.appendChild(div_title);
+    link_header.appendChild(div_header);
+    
+    
+    div_menucontainer.appendChild(link_work);
+    div_menucontainer.appendChild(div_spacer_small);
+    div_menucontainer.appendChild(link_prog);
+    div_menucontainer.appendChild(div_spacer_small.cloneNode());
+    div_menucontainer.appendChild(link_about);
+    div_menucontainer.appendChild(div_spacer_center);
+    div_menucontainer.appendChild(div_spacer_icons);
+    div_menucontainer.appendChild(div_spacer_icons.cloneNode());
+    div_menucontainer.appendChild(link_artst);
+    div_menucontainer.appendChild(div_spacer_icons.cloneNode());
+    div_menucontainer.appendChild(link_git);
+    div_menucontainer.appendChild(div_spacer_icons.cloneNode());
+    div_menucontainer.appendChild(link_xing);
+    div_menucontainer.appendChild(div_spacer_icons.cloneNode());
+    div_menucontainer.appendChild(link_lin);
+    div_menucontainer.appendChild(div_spacer_icons.cloneNode());
+    div_menucontainer.appendChild(link_mail);
+    div_menucontainer.appendChild(div_spacer_icons.cloneNode());
+    div_menucontainer.appendChild(div_spacer_right);
+
+    
+    
+    
+    
+    insert.appendChild(link_header);
+    insert.appendChild(div_menucontainer);
+    
+    
     
 }
 
 function drawFooter()
 {
-    document.write('<div class="footer_wrapper"><div class="footer_line"></div><div class="footer_content"><div class="footer_copyright">All works (c) Stefan Wendling 2018.</div><div class="footer_contact">Contact | Impressum</div></div></div>');
+    document.write('<div class="footer_wrapper"><div class="footer_line"></div><div class="footer_content"><div class="noselect footer_copyright">All works (c) Stefan Wendling 2018.</div><div class="footer_contact">Contact | Imprint</div></div></div>');
     updateHeight();
 }
 
@@ -143,13 +301,22 @@ async function drawSkills()
 }
 
 
-function drawInfoPopup(obj)
+async function drawProjects()
+{
+    callPhp("getProjects","",'writeCallback(projects_store.data,"projects_entry",true)',true,projects_store);
+    
+    
+}
+
+
+
+function drawInfoPopupSkills(obj)
 {
     var popup = document.createElement('div');
     popup.className = 'skills_list_item_infowrapper';
-    popup.innerHTML = "Did: <div class='skills_info_item_sub'>" + obj.getAttribute("descr") + "</div>";
+    popup.innerHTML = "Did: <div class='skills_info_item_sub'>" + obj.getAttribute("info_descr") + "</div>";
     
-    var used = obj.getAttribute("rel");
+    var used = obj.getAttribute("info_rel");
     
     if(used != "")
     {
@@ -161,6 +328,19 @@ function drawInfoPopup(obj)
     obj.appendChild(popup);
     
 }
+
+function drawInfoPopup(obj)
+{
+    
+    var popup = document.createElement('div');
+    
+    popup.className = 'skills_list_item_infowrapper';
+    popup.innerHTML = obj.getAttribute("info_title") + "<div class='skills_info_item_sub'>" + obj.getAttribute("info_descr") + "</div>";
+    
+    obj.appendChild(popup);
+    
+}
+
 
 function removeInfoPopup(obj)
 {
