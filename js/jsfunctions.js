@@ -58,16 +58,28 @@ function drawHeader()
 
     div_menucontainer.appendChild(div_spacer_left);
     
+    var link_work = document.createElement("a");
+    
+    var link_prog = link_work.cloneNode();
+    
+    var link_about = link_work.cloneNode();
+    
     if (active < 3)
     {
         
-        div_spacer_left.style.width = "200px";
+        div_spacer_left.style.width = "195px";
+        link_work.href = "index.html";
+        link_prog.href = "experience.html";
+        link_about.href = "about.html";
         
     } else 
     {
         
+        link_work.href = "../../index.html";
+        link_prog.href = "../../experience.html";
+        link_about.href = "../../about.html";
         
-        div_spacer_left.style.width = "100px";
+        div_spacer_left.style.width = "95px";
         
         var div_menu_back = document.createElement("div");
         div_menu_back.className = "menu_item_back";
@@ -101,15 +113,6 @@ function drawHeader()
     }
     
     
-    
-    var link_work = document.createElement("a");
-    link_work.href = "index.html";
-    
-    var link_prog = link_work.cloneNode();
-    link_prog.href = "experience.html";
-    
-    var link_about = link_work.cloneNode();
-    link_about.href = "about.html";
     
     var div_work = document.createElement("div");
     div_work.className = "menu_item_disabled";
@@ -208,7 +211,7 @@ function drawHeader()
     var div_spacer_right = document.createElement("div");
     div_spacer_right.className = "menu_spacer";
     div_spacer_right.style.flexGrow = "1";
-    div_spacer_right.style.marginRight = "50px";
+    div_spacer_right.style.marginRight = "80px";
     
     
     
@@ -241,7 +244,7 @@ function drawHeader()
     
     
     
-    insert.appendChild(link_header);
+    //insert.appendChild(link_header);
     insert.appendChild(div_menucontainer);
     
     
@@ -305,6 +308,31 @@ async function drawProjects()
 {
     callPhp("getProjects","",'writeCallback(projects_store.data,"projects_entry",true)',true,projects_store);
     
+    
+}
+
+async function drawProject()
+{
+    
+    var title = document.getElementsByName('descr')[0].getAttribute('content');
+    
+    var title_div = document.getElementById("project_entry");
+    
+    var title_div2 = document.createElement("div");
+    title_div2.className = "project_title";
+    
+    var title_insert = document.createElement("div");
+    title_insert.className = "project_title_text";
+    title_insert.innerHTML = title;
+    
+    title_div2.appendChild(title_insert);
+    
+    var title_img = document.createElement("div");
+    title_img.className = "project_headerimg";
+    
+    
+    title_div.appendChild(title_div2);
+    title_div.appendChild(title_img);
     
 }
 

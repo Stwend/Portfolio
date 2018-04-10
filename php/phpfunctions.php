@@ -17,19 +17,28 @@ if (in_array($f,$whitelist))
 }
 
 
-//TODO: Sort by priority
 function getProjects()
 {
     $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\projects\\*"),"is_dir");
+    
+    $ar = array_reverse($ar);
+    
     $ar2 = array();
     $txt = "";
     foreach ($ar as $item)
     {
-        $f = $item.'\\config.json';
-        $item_rel = str_replace("\\","/",'projects'.explode("projects", $item)[1]);
-        $j = json_decode(file_get_contents($f),true);
-        $txt = $txt.'<a href = ""><div class="content" style=\'background-image: url("'.$item_rel.'/thumb.png");\'>'
-                .'<div class="content_title_wrapper"><div class="noselect content_title">'.$j["name"]
+        
+        $item_rel = 'projects'.explode("/projects", str_replace("\\", "/", $item))[1];
+        
+        $html = $item_rel.'/project.html';
+
+        
+        $tags = get_meta_tags($item.'\\project.html');
+ 
+        
+        
+        $txt = $txt.'<a href = "'.$html.'"><div class="content" style=\'background-image: url("'.$item_rel.'/thumb.png");\'>'
+                .'<div class="content_title_wrapper"><div class="noselect content_title">'.$tags["descr"]
                 .'</div>'
                 .'</div>'
                 .'</div></a>';
