@@ -4,7 +4,12 @@
 $f = filter_input(INPUT_GET,"f",FILTER_SANITIZE_STRING);
 $args = filter_input(INPUT_GET,"args",FILTER_SANITIZE_STRING);
 
-$whitelist = ["getProjects","getRepos","getReposLocal","getSkills","sendMail"];
+
+
+
+
+
+$whitelist = ["getProjects","getProject","getRepos","getReposLocal","getSkills","sendMail"];
 if (in_array($f,$whitelist))
 {
     if (function_exists($f))
@@ -48,6 +53,121 @@ function getProjects()
 }
 
 
+function getProject($project_id)
+{
+    
+    $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\projects\\*"),"is_dir");
+
+    $path = "";
+    
+    
+    
+    foreach ($ar as $item)
+    {
+        
+        $path_temp = $item.'\\project.html';
+
+        
+        $tags = get_meta_tags($path_temp);
+ 
+        if ($tags["descr"] == $project_id)
+        {
+            
+            $path = $item;
+            break;
+            
+        }
+        
+    }
+    
+    
+    $txt = "";
+    
+    if ($path != "")
+    {
+        
+        $folder_gallery = $path.'\\gallery';
+        $file_cfg = json_decode(file_get_contents($path.'\\config.json'),true);
+        $video = $file_cfg["video"];
+        $software = $file_cfg["software"];
+        
+        $txt .= '<div class="project_title">'
+                .'<div class="project_title_text">'
+                .$project_id
+                .'</div>'
+                .'<div class="project_title_descr">'
+                .'<div class="project_title_descr_wrapper">';
+                
+        if (software != "")
+        {
+            
+            $soft_dict = ["blender"=>"Blender","sdesigner"=>"Substance Designer","spainter"=>"Substance Painter","maya"=>"Autodesk Maya","ue4"=>"Unreal Engine 4","unity"=>"Unity3D","krita"=>"Krita","ink"=>"Inkscape","mari"=>"Mari"];
+            
+            foreach($software as $s)
+            {
+                
+                $txt .= '<div class="project_title_descr_icon" onmouseover="drawInfoPopupSoft(this);" onmouseout="removeInfoPopup(this);" info_descr = "'.$soft_dict[$s].'" style=\'background-image: url("../../images/sft_'.$s.'.png");\'>'    
+                        .'</div>';
+                
+            }
+            
+        }
+        
+        
+        $txt .= '</div></div></div>';
+        
+        
+        if(video != "")
+        {
+            
+            $youtube_pre = 'https://img.youtube.com/vi/';   
+            
+            foreach($video as $v)
+            {
+                
+                $txt .= '<div class="content_project" style=\'background-image: url("'.$youtube_pre.$v.'/hqdefault.jpg");\'>'
+                        .'<div class="project_video_img"></div>'
+                        . '</div>';
+                
+                
+                
+            }
+            
+            
+        }
+        
+        
+
+        if(is_dir($folder_gallery))
+        {
+            
+            $images = glob($folder_gallery . "\\*.png");
+            
+            foreach($images as $img)
+            {
+                
+
+                
+                $imgname = array_reverse(explode('\\', $img))[0];
+                
+                $txt .= '<div class="content" style=\'background-image: url("gallery/'.$imgname.'");\'></div>';
+
+                
+                
+            }
+            
+            
+        }
+        
+        
+        
+        
+        
+    }
+    
+    return $txt;
+    
+}
 
 
 

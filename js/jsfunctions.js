@@ -3,11 +3,12 @@ var github_store = {data: "ayy"};
 var local_repo_store = {data: "ayy"};
 var skills_store = {data: "ayy"};
 var projects_store = {data: "ayy"};
+var project_store = {data: "ayy"};
 
 
 //code & args are passed to php, after receiving the php data callback is called, option to store data in a variable object.
 //request.responseText can also be used inside the callback code.
-async function callPhp(code,args,callback,async=false,storeob=null)
+async function callPhp(code,args,callback,file = "php/phpfunctions.php",async=false,storeob=null)
 {  
     
     
@@ -22,7 +23,7 @@ async function callPhp(code,args,callback,async=false,storeob=null)
             return;
             
     };
-    request.open("GET", "php/phpfunctions.php?f=" + code + "&args=" + args, async);
+    request.open("GET", file + "?f=" + code + "&args=" + args, async);
     request.send();
 }
 
@@ -274,8 +275,8 @@ async function drawRepos()
           
     other.innerHTML = git.innerHTML;
     
-    callPhp("getReposLocal","",'writeCallback(local_repo_store.data,"other_entry",true)',true, local_repo_store);
-    callPhp("getRepos","",'writeCallback(github_store.data,"git_entry",true)',true, github_store);
+    callPhp("getReposLocal","",'writeCallback(local_repo_store.data,"other_entry",true)',"php/phpfunctions.php",true, local_repo_store);
+    callPhp("getRepos","",'writeCallback(github_store.data,"git_entry",true)',"php/phpfunctions.php",true, github_store);
     
 
 }
@@ -292,6 +293,7 @@ function writeCallback(data,id,replace = true)
     {
         elem.innerHTML += data;
     }
+    
     updateHeight();
     
 }
@@ -299,14 +301,14 @@ function writeCallback(data,id,replace = true)
 
 async function drawSkills()
 {  
-    callPhp("getSkills","",'writeCallback(skills_store.data, "skills_ip", true)',true,skills_store);
+    callPhp("getSkills","",'writeCallback(skills_store.data, "skills_ip", true)',"php/phpfunctions.php",true,skills_store);
 
 }
 
 
 async function drawProjects()
 {
-    callPhp("getProjects","",'writeCallback(projects_store.data,"projects_entry",true)',true,projects_store);
+    callPhp("getProjects","",'writeCallback(projects_store.data,"projects_entry",true)',"php/phpfunctions.php",true,projects_store);
     
     
 }
@@ -316,6 +318,7 @@ async function drawProject()
     
     var title = document.getElementsByName('descr')[0].getAttribute('content');
     
+    /*
     var title_div = document.getElementById("project_entry");
     
     var title_div2 = document.createElement("div");
@@ -325,14 +328,18 @@ async function drawProject()
     title_insert.className = "project_title_text";
     title_insert.innerHTML = title;
     
-    title_div2.appendChild(title_insert);
-    
-    var title_img = document.createElement("div");
-    title_img.className = "project_headerimg";
-    
+    var title_insert2 = document.createElement("div");
+    title_insert2.className = "project_title_descr";
     
     title_div.appendChild(title_div2);
-    title_div.appendChild(title_img);
+    title_div2.appendChild(title_insert);
+    title_div2.appendChild(title_insert2);
+     
+     **/
+    
+    callPhp("getProject",title,'writeCallback(project_store.data, "project_entry", true)',"../../php/phpfunctions.php",true,project_store);
+    
+    
     
 }
 
@@ -352,6 +359,16 @@ function drawInfoPopupSkills(obj)
         popup.innerHTML += "<br> Used: <div class='skills_info_item_sub'>" + used + "</div>"
         
     }
+    
+    obj.appendChild(popup);
+    
+}
+
+function drawInfoPopupSoft(obj)
+{
+    var popup = document.createElement('div');
+    popup.className = 'software_list_item_infowrapper';
+    popup.innerHTML = obj.getAttribute("info_descr");
     
     obj.appendChild(popup);
     
