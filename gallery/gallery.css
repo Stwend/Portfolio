@@ -31,3 +31,38 @@
 
 .g_elem {
 }
+
+
+.g_arrowR {
+
+    width:50px;
+    height:50px;
+    
+    background-image: url(img/arrow.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    position: fixed;
+    top:50%;
+    right:50px;
+    transform: translate(-50%, 0px);
+    transform: rotate(90deg);
+    
+    display:none;
+    
+}
+
+
+.g_arrowR:hover {
+    
+    background-color: #fff2;
+    
+}
+
+
+.g_arrowTurn {
+    
+    left:50px;
+    transform: rotate(-90deg);
+    
+}
