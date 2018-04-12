@@ -318,24 +318,6 @@ async function drawProject()
     
     var title = document.getElementsByName('descr')[0].getAttribute('content');
     
-    /*
-    var title_div = document.getElementById("project_entry");
-    
-    var title_div2 = document.createElement("div");
-    title_div2.className = "project_title";
-    
-    var title_insert = document.createElement("div");
-    title_insert.className = "project_title_text";
-    title_insert.innerHTML = title;
-    
-    var title_insert2 = document.createElement("div");
-    title_insert2.className = "project_title_descr";
-    
-    title_div.appendChild(title_div2);
-    title_div2.appendChild(title_insert);
-    title_div2.appendChild(title_insert2);
-     
-     **/
     
     callPhp("getProject",title,'writeCallback(project_store.data, "project_entry", true)',"../../php/phpfunctions.php",true,project_store);
     
@@ -368,7 +350,7 @@ function drawInfoPopupSoft(obj)
 {
     var popup = document.createElement('div');
     popup.className = 'software_list_item_infowrapper';
-    popup.innerHTML = obj.getAttribute("info_descr");
+    popup.innerHTML = '<nobr>' + obj.getAttribute("info_descr");
     
     obj.appendChild(popup);
     

@@ -43,6 +43,12 @@
 @font-face { font-family: 'title';
              src: url('../res/ostrich-regular.ttf') format('truetype'); }
 
+body {
+    
+    overflow: auto;
+    
+}
+
 
 a {
     
@@ -339,6 +345,8 @@ a {
     grid-column-start: auto;
     grid-row-start: auto;
     
+    cursor: pointer;
+    
     position: relative;
 }
 
@@ -427,6 +435,8 @@ a {
     transition-delay: 0s;
     transition-duration: 0.1s;
     transition-timing-function: ease-out;
+    
+    cursor: pointer;
     
     position: relative;
 }

@@ -125,7 +125,7 @@ function getProject($project_id)
             foreach($video as $v)
             {
                 
-                $txt .= '<div class="content_project" style=\'background-image: url("'.$youtube_pre.$v.'/hqdefault.jpg");\'>'
+                $txt .= '<div class="g_elem content_project" info_video="'.$v.'" onclick ="openGallery(this);" style=\'background-image: url("'.$youtube_pre.$v.'/hqdefault.jpg");\'>'
                         .'<div class="project_video_img"></div>'
                         . '</div>';
                 
@@ -150,7 +150,7 @@ function getProject($project_id)
                 
                 $imgname = array_reverse(explode('\\', $img))[0];
                 
-                $txt .= '<div class="content" style=\'background-image: url("gallery/'.$imgname.'");\'></div>';
+                $txt .= '<div class="g_elem content" onclick="openGallery(this)" style=\'background-image: url("gallery/'.$imgname.'");\'></div>';
 
                 
                 
