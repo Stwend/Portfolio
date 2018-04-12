@@ -1,43 +1,152 @@
-var embed_youtube = {pre:`<iframe width="1280" height="720" src="https://www.youtube.com/embed/`,post:`?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`}
+var embed_youtube = {pre:`<iframe width="1280" height="720" src="https://www.youtube.com/embed/`,post:`?rel=0&amp;showinfo=0;autoplay=1;controls=0;disablekb=1;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`};
+var gallery_info = {active: false, current: null, target: null, background: null, maxWidth: window.innerWidth-200, maxHeight: window.innerHeight-50};
 
+//Left/Right key functionality
+document.onkeydown = checkKey;
 
 function openGallery(start_element)
 {
     disableScroll();
+    gallery_info.active = true;
+    gallery_info.current = start_element;
+    
     var div_blocker = document.createElement("div");
     div_blocker.className = "g_blocker";
     div_blocker.id = "gallery-blocker";
-    div_blocker.onclick = closeGallery;
+    
+    //Pass click target to close function
+    div_blocker.addEventListener("click", function(e) {closeGallery(e);});
+    
+    gallery_info.background = div_blocker;
     
     document.body.appendChild(div_blocker);
     
     var div_content = document.createElement("div");
     div_content.className = "g_content";
     
+    div_blocker.appendChild(div_content);
     
-    if(start_element.classList.contains("content_project"))
+    gallery_info.target = div_content;
+    
+    reloadContent();
+    
+    
+    
+    
+}
+
+
+function closeGallery(e)
+{
+    //Only close if background is clicked
+    if (e.target == gallery_info.background)
+    {
+        document.getElementById("gallery-blocker").remove();
+        enableScroll();
+        gallery_info.active = false;
+        gallery_info.current = null;
+    }
+    
+}
+
+
+function reloadContent()
+{
+    
+    clearTarget();
+    
+    if(gallery_info.current.classList.contains("content_project"))
+    {
+        var v_code = gallery_info.current.getAttribute("info_video");
+        gallery_info.target.innerHTML = embed_youtube.pre + v_code + embed_youtube.post;
+        
+        
+    } else 
     {
         
-        var v_code = start_element.getAttribute("info_video");
-        div_content.innerHTML = embed_youtube.pre + v_code + embed_youtube.post;
+        var imagename = grabBGImage(gallery_info.current);
         
+        imagename = imagename.slice(0,-10) + ".png";
+        
+        var img = document.createElement("img");
+        img.src = imagename;
+        
+        
+        img.onload = function() {
+            
+            var size = 1;
+            
+            if (img.width > gallery_info.maxWidth)
+            {
+                
+                size = gallery_info.maxWidth/img.width;
+                
+            }
+            
+            
+            if (img.height > gallery_info.maxHeight)
+            {
+                
+                size = Math.min(size, gallery_info.maxHeight/img.height);
+                
+            }
+ 
+            img.width *= size;
+            
+        };
+        
+        gallery_info.target.appendChild(img);
         
     }
     
-    div_blocker.appendChild(div_content);
-    
-    
+    placeArrows();
     
 }
 
 
-function closeGallery()
+
+function gallerySwitch(elem)
 {
     
-    document.getElementById("gallery-blocker").remove();
-    enableScroll();
+    if(elem.classList.contains("g_elem"))
+    {
+        gallery_info.current = elem;
+    
+        reloadContent();
+    }
     
 }
+
+
+function clearTarget()
+{
+    
+    while (gallery_info.target.firstChild) {
+    gallery_info.target.removeChild(gallery_info.target.firstChild);
+}
+    
+}
+
+function placeArrows()
+{
+    
+    
+    
+}
+
+
+function grabBGImage(elem)
+{
+    
+    var url = elem.style.backgroundImage;
+    
+    url = url.slice(4, -1).replace(/["']/g, "");
+    
+    return url;
+    
+}
+
+
 
 
 function disableScroll()
@@ -52,4 +161,24 @@ function enableScroll()
     
     document.body.style.overflow = "auto";
     
+}
+
+
+
+
+function checkKey(e) {
+
+    if (gallery_info.active)
+    {
+
+    e = e || window.event;
+
+    if (e.keyCode == '37') {
+       gallerySwitch(gallery_info.current.previousSibling);
+    }
+    else if (e.keyCode == '39') {
+       gallerySwitch(gallery_info.current.nextSibling);
+    }
+    }
+
 }

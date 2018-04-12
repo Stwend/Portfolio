@@ -5,6 +5,8 @@ var skills_store = {data: "ayy"};
 var projects_store = {data: "ayy"};
 var project_store = {data: "ayy"};
 
+document.addEventListener('contextmenu', event => event.preventDefault());
+
 
 //code & args are passed to php, after receiving the php data callback is called, option to store data in a variable object.
 //request.responseText can also be used inside the callback code.

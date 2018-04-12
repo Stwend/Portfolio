@@ -141,13 +141,12 @@ function getProject($project_id)
         if(is_dir($folder_gallery))
         {
             
-            $images = glob($folder_gallery . "\\*.png");
+            $images = array_reverse(glob($folder_gallery . "\\*_thumb.png"));
             
             foreach($images as $img)
             {
                 
 
-                
                 $imgname = array_reverse(explode('\\', $img))[0];
                 
                 $txt .= '<div class="g_elem content" onclick="openGallery(this)" style=\'background-image: url("gallery/'.$imgname.'");\'></div>';
