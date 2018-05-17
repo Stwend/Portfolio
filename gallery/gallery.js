@@ -90,6 +90,7 @@ function reloadContent()
         
         var img = document.createElement("img");
         img.src = imagename;
+        img.style.display = "none";
         
         
         img.onload = function() {
@@ -112,6 +113,7 @@ function reloadContent()
             }
  
             img.width *= size;
+            img.style.display = "block";
             
         };
         

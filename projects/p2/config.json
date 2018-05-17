@@ -1,12 +1,10 @@
 {
         "video": [
-            "MqNAvZ96rXk"
         ],
         
         "software": [
             "blender",
             "sdesigner",
-            "spainter",
-            "ue4"
+            "spainter"
         ]
 }

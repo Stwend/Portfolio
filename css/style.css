@@ -305,8 +305,8 @@ a {
 
 .content_wrapper {
     
-    margin: 50px 0px 90px 130px;
-    position: absolute;
+    margin: 50px 0px 0px 130px;
+    position: relative;
     width: calc(100% - 110px);
     display: grid;
     grid-gap: 38px;
@@ -319,16 +319,16 @@ a {
 
 .content_wrapper_exp {
     
-    margin: 50px 0px 90px 100px;
-    position: absolute;
+    margin: 50px 0px 0px 100px;
+    position: relative;
     width: calc(100% - 120px);
     overflow: hidden;
 }
 
 .content_wrapper_about {
     
-    margin: 50px 0px 90px 100px;
-    position: absolute;
+    margin: 50px 0px 0px 100px;
+    position: relative;
     width: calc(100% - 120px);
     overflow: hidden;
 }

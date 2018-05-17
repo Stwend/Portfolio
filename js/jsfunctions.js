@@ -256,12 +256,20 @@ function drawHeader()
 
 function drawFooter()
 {
-    document.write('<div class="footer_wrapper"><div class="footer_line"></div><div class="footer_content"><div class="noselect footer_copyright">All works (c) Stefan Wendling 2018.</div><div class="footer_contact">Contact | Imprint</div></div></div>');
+    
+    var content = document.getElementsByClassName("content_block")[0];
+    
+    var footer = document.createElement("div");
+    
+    footer.innerHTML = '<div class="footer_wrapper"><div class="footer_line"></div><div class="footer_content"><div class="noselect footer_copyright">All works (c) Stefan Wendling 2018.</div><div class="footer_contact">Contact | Imprint</div></div></div>';
+    
+    content.parentNode.insertBefore(footer, content.nextSibling);
+    
     updateHeight();
 }
 
 
-async function drawRepos()
+function drawRepos()
 {
 
     
@@ -277,14 +285,14 @@ async function drawRepos()
           
     other.innerHTML = git.innerHTML;
     
-    callPhp("getReposLocal","",'writeCallback(local_repo_store.data,"other_entry",true)',"php/phpfunctions.php",true, local_repo_store);
-    callPhp("getRepos","",'writeCallback(github_store.data,"git_entry",true)',"php/phpfunctions.php",true, github_store);
+    callPhp("getReposLocal","",'writeToDocument(local_repo_store.data,"other_entry",true)',"php/phpfunctions.php",true, local_repo_store);
+    callPhp("getRepos","",'writeToDocument(github_store.data,"git_entry",true)',"php/phpfunctions.php",true, github_store);
     
 
 }
 
 
-function writeCallback(data,id,replace = true)
+function writeToDocument(data,id,replace = true)
 {
     
     var elem = document.getElementById(id);
@@ -301,27 +309,70 @@ function writeCallback(data,id,replace = true)
 }
 
 
-async function drawSkills()
+function drawSkills()
 {  
-    callPhp("getSkills","",'writeCallback(skills_store.data, "skills_ip", true)',"php/phpfunctions.php",true,skills_store);
+    callPhp("getSkills","",'writeToDocument(skills_store.data, "skills_ip", true)',"php/phpfunctions.php",true,skills_store);
 
 }
 
 
-async function drawProjects()
+function drawProjects() {
+    
+    callPhp("getProjects","",'buildProjects(request.responseText)',"php/phpfunctions.php",true,projects_store);
+
+}
+
+function buildProjects(j)
 {
-    callPhp("getProjects","",'writeCallback(projects_store.data,"projects_entry",true)',"php/phpfunctions.php",true,projects_store);
+    
+    var json = JSON.parse(j);
+    
+    var entry = document.getElementById("projects_entry");
+    
+    for (var i=0; i < json.length; i++) {
+        
+        var item = json[i];
+        
+        var rootlink = document.createElement("a");
+        rootlink.href = item.link + "/project.html";
+        
+        
+        var root = document.createElement("div");
+        root.className = "content";
+        root.style.backgroundImage = 'url("' + item.link + '//thumb.jpg")';
+        
+        var title_wrapper = document.createElement("div");
+        title_wrapper.className = "content_title_wrapper";
+        
+        var title = document.createElement("div");
+        title.className = "noselect content_title";
+        title.innerHTML = item.tags;
+        
+        title_wrapper.appendChild(title);
+        
+        root.appendChild(title_wrapper);
+        
+        rootlink.appendChild(root);
+        
+        entry.appendChild(rootlink);
+           
+    }
+    
+
     
     
 }
 
-async function drawProject()
+
+
+
+function drawProject()
 {
     
     var title = document.getElementsByName('descr')[0].getAttribute('content');
     
     
-    callPhp("getProject",title,'writeCallback(project_store.data, "project_entry", true)',"../../php/phpfunctions.php",true,project_store);
+    callPhp("getProject",title,'writeToDocument(project_store.data, "project_entry", true)',"../../php/phpfunctions.php",true,project_store);
     
     
     
