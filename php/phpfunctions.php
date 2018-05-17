@@ -5,11 +5,9 @@ $f = filter_input(INPUT_GET,"f",FILTER_SANITIZE_STRING);
 $args = filter_input(INPUT_GET,"args",FILTER_SANITIZE_STRING);
 
 
-
-
-
-
 $whitelist = ["getProjects","getProject","getRepos","getReposLocal","getSkills","sendMail"];
+
+
 if (in_array($f,$whitelist))
 {
     if (function_exists($f))
@@ -22,34 +20,34 @@ if (in_array($f,$whitelist))
 }
 
 
+//CLASSES
+class ProjectSummary {
+    
+    public $link = '';
+    public $tags = null;
+    
+}
+
+
+
 function getProjects()
 {
     $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\projects\\*"),"is_dir");
-    
     $ar = array_reverse($ar);
     
-    $ar2 = array();
-    $txt = "";
+    $projects = array();
+    
+    
     foreach ($ar as $item)
     {
         
-        $item_rel = 'projects'.explode("/projects", str_replace("\\", "/", $item))[1];
+        $project = new ProjectSummary();
+        $project->link = 'projects'.explode("/projects", str_replace("\\", "/", $item))[1];
+        $project->tags = get_meta_tags($item.'\\project.html')["descr"];
         
-        $html = $item_rel.'/project.html';
-
-        
-        $tags = get_meta_tags($item.'\\project.html');
- 
-        
-        
-        $txt = $txt.'<a href = "'.$html.'"><div class="content" style=\'background-image: url("'.$item_rel.'/thumb.png");\'>'
-                .'<div class="content_title_wrapper"><div class="noselect content_title">'.$tags["descr"]
-                .'</div>'
-                .'</div>'
-                .'</div></a>';
-        
+        array_push($projects,$project);
     }
-    return $txt;
+    return json_encode($projects);
 }
 
 
@@ -141,7 +139,7 @@ function getProject($project_id)
         if(is_dir($folder_gallery))
         {
             
-            $images = array_reverse(glob($folder_gallery . "\\*_thumb.png"));
+            $images = array_reverse(glob($folder_gallery . "\\*_thumb.jpg"));
             
             foreach($images as $img)
             {
