@@ -23,9 +23,20 @@ if (in_array($f,$whitelist))
 //CLASSES
 class ProjectSummary {
     
-    public $link = '';
-    public $tags = null;
+    public $link = null;
+    public $title = null;
     
+}
+
+class Project {
+    
+    //public $link = null;
+    public $title = null;
+    public $software = array();
+    public $software_dict = null;
+    public $imagelinks = array();
+    public $videolinks = array();
+ 
 }
 
 
@@ -43,7 +54,7 @@ function getProjects()
         
         $project = new ProjectSummary();
         $project->link = 'projects'.explode("/projects", str_replace("\\", "/", $item))[1];
-        $project->tags = get_meta_tags($item.'\\project.html')["descr"];
+        $project->title = get_meta_tags($item.'\\project.html')["descr"];
         
         array_push($projects,$project);
     }
@@ -53,116 +64,82 @@ function getProjects()
 
 function getProject($project_id)
 {
-    
     $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\projects\\*"),"is_dir");
 
     $path = "";
-    
-    
-    
+    $tags = "";
+
     foreach ($ar as $item)
     {
-        
         $path_temp = $item.'\\project.html';
 
-        
-        $tags = get_meta_tags($path_temp);
+        $tags = get_meta_tags($path_temp)["descr"];
  
-        if ($tags["descr"] == $project_id)
-        {
-            
+        if ($tags == $project_id)
+        { 
             $path = $item;
             break;
-            
         }
-        
     }
-    
-    
-    $txt = "";
     
     if ($path != "")
     {
         
+        $project = new Project();
+        $project->title = $tags;
+        
+        
         $folder_gallery = $path.'\\gallery';
         $file_cfg = json_decode(file_get_contents($path.'\\config.json'),true);
+        $softwarelist = json_decode(file_get_contents(dirname( dirname(__FILE__) ).'\\res\\softwarelist.json'),true);
+        
+        $project->software_dict = $softwarelist;
+        
+        
+        
         $video = $file_cfg["video"];
         $software = $file_cfg["software"];
-        
-        $txt .= '<div class="project_title">'
-                .'<div class="project_title_text">'
-                .$project_id
-                .'</div>'
-                .'<div class="project_title_descr">'
-                .'<div class="project_title_descr_wrapper">';
                 
-        if (software != "")
-        {
+        if (software != ""){
             
-            $soft_dict = ["blender"=>"Blender","sdesigner"=>"Substance Designer","spainter"=>"Substance Painter","maya"=>"Autodesk Maya","ue4"=>"Unreal Engine 4","unity"=>"Unity3D","krita"=>"Krita","ink"=>"Inkscape","mari"=>"Mari"];
-            
-            foreach($software as $s)
-            {
+            foreach($software as $s){
                 
-                $txt .= '<div class="project_title_descr_icon" onmouseover="drawInfoPopupSoft(this);" onmouseout="removeInfoPopup(this);" info_descr = "'.$soft_dict[$s].'" style=\'background-image: url("../../images/sft_'.$s.'.png");\'>'    
-                        .'</div>';
-                
+                //array_push($project->software, $softwarelist[$s]);
+                array_push($project->software, $s);
+   
             }
-            
         }
-        
-        
-        $txt .= '</div></div></div>';
         
         
         if(video != "")
         {
             
-            $youtube_pre = 'https://img.youtube.com/vi/';   
-            
-            foreach($video as $v)
-            {
+            foreach($video as $v){
                 
-                $txt .= '<div class="g_elem content_project" info_video="'.$v.'" onclick ="openGallery(this);" style=\'background-image: url("'.$youtube_pre.$v.'/hqdefault.jpg");\'>'
-                        .'<div class="project_video_img"></div>'
-                        . '</div>';
-                
-                
+                array_push($project->videolinks, $v);
                 
             }
-            
             
         }
         
         
 
         if(is_dir($folder_gallery))
-        {
-            
+        { 
             $images = array_reverse(glob($folder_gallery . "\\*_thumb.jpg"));
             
             foreach($images as $img)
             {
-                
-
-                $imgname = array_reverse(explode('\\', $img))[0];
-                
-                $txt .= '<div class="g_elem content" onclick="openGallery(this)" style=\'background-image: url("gallery/'.$imgname.'");\'></div>';
-
-                
-                
+                $imgname = substr(array_reverse(explode('\\', $img))[0],0,-10);
+                array_push($project->imagelinks, $imgname);  
             }
             
             
         }
-        
-        
-        
-        
-        
+    
     }
     
-    return $txt;
+    return json_encode($project);
     
 }
 

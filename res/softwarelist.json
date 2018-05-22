@@ -1,0 +1,12 @@
+{
+    
+    "blender":"Blender",
+    "sdesigner":"Substance Designer",
+    "spainter":"Substance Painter",
+    "maya":"Autodesk Maya",
+    "ue4":"Unreal Engine 4",
+    "unity":"Unity3D",
+    "krita":"Krita",
+    "ink":"Inkscape",
+    "mari":"Mari"
+}

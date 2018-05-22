@@ -2,15 +2,17 @@
 var github_store = {data: "ayy"};
 var local_repo_store = {data: "ayy"};
 var skills_store = {data: "ayy"};
-var projects_store = {data: "ayy"};
-var project_store = {data: "ayy"};
+
+var youtube_pre_img = 'https://img.youtube.com/vi/'; 
+
+
 
 document.addEventListener('contextmenu', event => event.preventDefault());
 
 
 //code & args are passed to php, after receiving the php data callback is called, option to store data in a variable object.
 //request.responseText can also be used inside the callback code.
-async function callPhp(code,args,callback,file = "php/phpfunctions.php",async=false,storeob=null)
+async function callPhp(code,args,callback,file = "php/phpfunctions.php",async=true,storeob=null)
 {  
     
     
@@ -318,7 +320,7 @@ function drawSkills()
 
 function drawProjects() {
     
-    callPhp("getProjects","",'buildProjects(request.responseText)',"php/phpfunctions.php",true,projects_store);
+    callPhp("getProjects","",'buildProjects(request.responseText)',"php/phpfunctions.php");
 
 }
 
@@ -346,7 +348,7 @@ function buildProjects(j)
         
         var title = document.createElement("div");
         title.className = "noselect content_title";
-        title.innerHTML = item.tags;
+        title.innerHTML = item.title;
         
         title_wrapper.appendChild(title);
         
@@ -372,7 +374,104 @@ function drawProject()
     var title = document.getElementsByName('descr')[0].getAttribute('content');
     
     
-    callPhp("getProject",title,'writeToDocument(project_store.data, "project_entry", true)',"../../php/phpfunctions.php",true,project_store);
+    callPhp("getProject",title,'buildProject(request.responseText)',"../../php/phpfunctions.php");
+    
+    
+    
+}
+
+function buildProject(j)
+{
+    
+    var json = JSON.parse(j);
+    var entry = document.getElementById("project_entry");
+
+    
+    
+    
+        
+    var title = document.createElement("div");
+    title.className = "project_title";
+    
+    var title_text = document.createElement("div");
+    title_text.className = "project_title_text";
+    title_text.innerHTML = json["title"];
+    
+    var title_descr = document.createElement("div");
+    title_descr.className = "project_title_descr";
+    
+    var title_descr_wrapper = document.createElement("div");
+    title_descr_wrapper.className = "project_title_descr_wrapper";
+    
+    var temp = null;
+    
+    for (var i=0; i < json["software"].length; i++) {
+        
+        var soft_short = json["software"][i];
+        var soft = json["software_dict"][soft_short];
+        
+        temp = document.createElement("div");
+        temp.className = "project_title_descr_icon";
+        temp.style = 'background-image: url("../../images/sft_' + soft_short +'.png");';  
+        temp.setAttribute("info_descr",soft);   
+        temp.onmouseover = function() {drawInfoPopupSoft(this);}
+        temp.onmouseout = function() {removeInfoPopup(this);}
+        
+        
+        title_descr_wrapper.appendChild(temp);
+        
+    }
+    
+    
+    
+    
+    title_descr.appendChild(title_descr_wrapper);
+    
+    title.appendChild(title_text);
+    title.appendChild(title_descr);
+
+
+    entry.appendChild(title);
+    
+
+    var img = null;
+    
+    for (var i=0; i < json["videolinks"].length; i++) {
+        
+        var vid = json["videolinks"][i];
+        
+        temp = document.createElement("div");
+        temp.className = "g_elem content_project";
+        temp.style = 'background-image: url("' + youtube_pre_img + vid + '/hqdefault.jpg");';
+        temp.setAttribute("info_video",vid);
+        temp.onclick = function() {openGallery(this);}
+        
+        img = document.createElement("div");
+        img.className = "project_video_img";
+        
+        temp.appendChild(img);
+        
+        entry.appendChild(temp);
+        
+    }
+    
+    for (var i=0; i < json["imagelinks"].length; i++) {
+        
+        var img = json["imagelinks"][i];
+        
+        temp = document.createElement("div");
+        temp.className = "g_elem content";
+        temp.style = 'background-image: url("gallery/' + img + '_thumb.jpg");';
+        
+        temp.onclick = function() {openGallery(this);}
+        
+        
+        entry.appendChild(temp);
+        
+    }
+    
+    
+    
     
     
     
