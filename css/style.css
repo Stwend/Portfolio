@@ -307,7 +307,7 @@ a {
     
     margin: 50px 0px 0px 130px;
     position: relative;
-    width: calc(100% - 110px);
+    width: calc(100% - 130px);
     display: grid;
     grid-gap: 38px;
     grid-template-columns: repeat(var(--col_num_Content), auto);
@@ -321,7 +321,7 @@ a {
     
     margin: 50px 0px 0px 100px;
     position: relative;
-    width: calc(100% - 120px);
+    width: calc(100% - 100px);
     overflow: hidden;
 }
 
@@ -329,7 +329,7 @@ a {
     
     margin: 50px 0px 0px 100px;
     position: relative;
-    width: calc(100% - 120px);
+    width: calc(100% - 100px);
     overflow: hidden;
 }
 
@@ -606,6 +606,15 @@ a {
 
 
 /*CONTENT|CODING*/
+
+.menu_spacer_submenu {
+    
+    height:1px;
+    width:250px;
+    background-color: var(--highcontrast);
+    margin: 15px 0px 0px 100px;
+    
+}
 
 
 .content_coding_item {

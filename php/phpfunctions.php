@@ -30,13 +30,20 @@ class ProjectSummary {
 
 class Project {
     
-    //public $link = null;
     public $title = null;
     public $software = array();
     public $software_dict = null;
     public $imagelinks = array();
     public $videolinks = array();
- 
+}
+
+class RepoSummary {
+    
+    public $name = "";
+    public $href = "";
+    public $languages = array();
+    public $description = "";
+    
 }
 
 
@@ -167,73 +174,47 @@ function getRepos()
     //Get GitHub projects
     $content = json_decode(file_get_contents($file),true);
     $text = "";
+    $summaries = array();
     
     $langs = explode('*',file_get_contents($langfile));
     
     if ($content != "")
     {
         $i = 0;
+        
         foreach ($content as $item)
         {
 
+            $temp = new RepoSummary();
             $languages_list = json_decode($langs[$i],true);
             
-            $text = $text.'<a target="_blank" href="'.$item['html_url'].'">'
-                    . '<div class="content_coding_item">'
-                    . '<div class="content_headline">'
-                    .$item['name']
-                    .'</div>'
-                    . '<div class="content_subheadline">'
-                    .implode(', ',array_keys($languages_list))
-                    .'<div class = "content_description">'
-                    .$item['description']
-                    .'</div></div></div></a><br>';
+            $temp->name = $item["name"];
+            $temp->href = $item["html_url"];
+            $temp->languages = implode(', ',array_keys($languages_list));
+            $temp->description = $item['description'];
 
+            array_push($summaries, $temp);
+            
             $i++;
 
         }
     } else 
     {
-        
-        $text = $text.'<div class="content_coding_item_error"><div class=content_subheadline>No GitHub repositories found.</div></div>';
-        
-        
+        return "No GitHub repositories found.";
+        //$text = $text.'<div class="content_coding_item_error"><div class=content_subheadline>No GitHub repositories found.</div></div>';
+   
     }
     
     
     
-    return $text;
+    return json_encode($summaries);
 }
 
 function getReposLocal()
 {
-    
-    $othersfile = dirname( dirname(__FILE__) ).'\\res\\codingprojects.store';
-    
-    $text2 = "";
-    
-    //Get other projects from JSON file
-    $content = json_decode(file_get_contents($othersfile),true);
-    
-    foreach ($content as $item)
-    {
-        
-        $text2 = $text2.'<a target="_blank" href="'
-                .$item['href']
-                .'"><div class="content_coding_item"><div class="content_headline">'
-                .$item['name']
-                .'</div><div class="content_subheadline">'
-                .$item['languages']
-                .'<div class = "content_description">'
-                .$item['description'].
-                '</div></div></div></a><br>';
+  
+    return file_get_contents(dirname( dirname(__FILE__) ).'\\res\\codingprojects.json');
 
-    }
-    
-    
-    return $text2;
-    
-    
 }
 
 

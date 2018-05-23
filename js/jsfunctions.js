@@ -1,11 +1,10 @@
-var github_store = {data: "ayy"};
-var local_repo_store = {data: "ayy"};
-
 var youtube_pre_img = 'https://img.youtube.com/vi/'; 
 
-
-
 document.addEventListener('contextmenu', event => event.preventDefault());
+
+
+
+
 
 
 //code & args are passed to php, after receiving the php data callback is called, option to store data in a variable object.
@@ -27,13 +26,6 @@ async function callPhp(code,args,callback,file = "php/phpfunctions.php",async=tr
     };
     request.open("GET", file + "?f=" + code + "&args=" + args, async);
     request.send();
-}
-
-
-function calcContentgrid()
-{
-    var num = Math.round((document.body.clientWidth-250)/363);
-    document.documentElement.style.setProperty('--col_num_Content', num);
 }
 
 
@@ -272,24 +264,94 @@ function drawFooter()
 function drawRepos()
 {
 
-    
     //initialize loader animations
     
     var git = document.getElementById("git_entry");
     var other = document.getElementById("other_entry");
     
-    git.innerHTML = '<div class="content_loader_wrapper">' 
-                  + '<div class="content_loader"></div>'
-                  + '<div class="content_loader_text">Fetching repositories...</div>'  
-                  + '</div>';
+    var wrapper = document.createElement("div");
+    wrapper.className = "content_loader_wrapper";
+    
+    var loader = document.createElement("div");
+    loader.className = "content_loader";
+    
+    var text = document.createElement("div");
+    text.className = "content_loader_text";
+    text.innerHTML = "Fetching repositories...";
+    
+    wrapper.appendChild(loader);
+    wrapper.appendChild(text);
+    
+    git.appendChild(wrapper);
           
     other.innerHTML = git.innerHTML;
     
-    callPhp("getReposLocal","",'writeToDocument(local_repo_store.data,"other_entry",true)',"php/phpfunctions.php",true, local_repo_store);
-    callPhp("getRepos","",'writeToDocument(github_store.data,"git_entry",true)',"php/phpfunctions.php",true, github_store);
-    
+    callPhp("getReposLocal","",'buildRepos(request.responseText,"other_entry")',"php/phpfunctions.php");
+    callPhp("getRepos","",'buildRepos(request.responseText,"git_entry")',"php/phpfunctions.php");
 
 }
+
+
+function buildRepos(j,parentID) {
+
+    var parent = document.getElementById(parentID);
+    
+    if(j == "No GitHub repositories found."){
+        
+        var wrapper = document.createElement("div");
+        wrapper.className = "content_coding_item_error";
+        
+        var text = document.createElement("div");
+        text.className = "content_subheadline";
+        text.innerHTML = j;
+        
+        wrapper.appendChild(text);
+        parent.appendChild(wrapper);
+        
+        return;
+        
+    }
+    
+    parent.innerHTML = "";
+    
+    var json = JSON.parse(j);
+    
+    for (var i=0; i<json.length; i++) {
+        
+        var current = json[i];
+        
+        var link = document.createElement("a");
+        link.href = current["href"];
+        link.target = "_blank";
+        
+        var wrapper = document.createElement("div");
+        wrapper.className = "content_coding_item";
+        
+        var headline = document.createElement("div");
+        headline.className = "content_headline";
+        headline.innerHTML = current["name"];
+        
+        var subheadline = document.createElement("div");
+        subheadline.className = "content_subheadline";
+        subheadline.innerHTML = current["languages"];
+        
+        var descr = document.createElement("div");
+        descr.className = "content_description";
+        descr.innerHTML = current["description"];
+        
+        subheadline.appendChild(descr);
+        wrapper.appendChild(headline);
+        wrapper.appendChild(subheadline);
+        link.appendChild(wrapper);
+        
+        parent.appendChild(link);
+ 
+    }
+    
+    updateHeight(-200);
+    
+}
+
 
 
 function writeToDocument(data,id,replace = true)
@@ -638,9 +700,9 @@ function removeInfoPopup(obj)
 }
 
 
-function updateHeight()
+function updateHeight(offset= -100)
 {
     
-    document.documentElement.style.setProperty('--contentHeight',document.body.scrollHeight-100);
+    document.documentElement.style.setProperty('--contentHeight',document.body.scrollHeight+offset);
     
 }
