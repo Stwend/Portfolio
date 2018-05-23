@@ -1,4 +1,6 @@
-[[
+{
+    
+    "software":[
 
     {
         "name":"Maya",
@@ -72,7 +74,7 @@
   
 ],
 
-[
+"programming": [
     
     {
         "name":"Python",
@@ -132,4 +134,7 @@
     
     
   
-]]
+]
+    
+
+}

@@ -277,7 +277,9 @@ function updateRepos()
 function getSkills()
 {
     
-    $skillsfile = dirname( dirname(__FILE__) ).'\\res\\skills.store';
+    $skillsfile = dirname( dirname(__FILE__) ).'\\res\\skills.json';
+    
+    return file_get_contents($skillsfile);
     
     $skills = json_decode(file_get_contents($skillsfile),true);
     

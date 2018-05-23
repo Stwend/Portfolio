@@ -1,7 +1,5 @@
-//Since global vars often need to be passed as references, they are put into objects, always as a "data".
 var github_store = {data: "ayy"};
 var local_repo_store = {data: "ayy"};
-var skills_store = {data: "ayy"};
 
 var youtube_pre_img = 'https://img.youtube.com/vi/'; 
 
@@ -313,8 +311,119 @@ function writeToDocument(data,id,replace = true)
 
 function drawSkills()
 {  
-    callPhp("getSkills","",'writeToDocument(skills_store.data, "skills_ip", true)',"php/phpfunctions.php",true,skills_store);
+    callPhp("getSkills","",'buildSkills(request.responseText)',"php/phpfunctions.php");
 
+}
+
+
+function buildSkills(j)
+{
+    
+    var entry = document.getElementById("skills_entry");
+    
+    var json = JSON.parse(j);
+    
+    var soft = json["software"];
+    var prog = json["programming"];
+    
+    
+    var wrapper_soft = document.createElement("div");
+    wrapper_soft.className = "skills_list";
+    var soft_title = document.createElement("div");
+    soft_title.className = "noselect skills_list_header";
+    soft_title.innerHTML = "Software";
+    var soft_body = document.createElement("div");
+    soft_body.className = "skills_list_body";
+    
+    wrapper_soft.appendChild(soft_title);
+    wrapper_soft.appendChild(soft_body);
+    
+    
+    
+    var wrapper_prog = document.createElement("div");
+    wrapper_prog.className = "skills_list";
+    var prog_title = document.createElement("div");
+    prog_title.className = "noselect skills_list_header";
+    prog_title.innerHTML = "Programming";
+    var prog_body = document.createElement("div");
+    prog_body.className = "skills_list_body";
+    
+    wrapper_prog.appendChild(prog_title);
+    wrapper_prog.appendChild(prog_body);
+    
+
+    
+    var temp = null;
+    var damp = null;
+    
+    for (var i=0; i < soft.length; i++) {
+        
+        var current = soft[i];
+        
+        var wrapper = document.createElement("div");
+        wrapper.className = "noselect skills_list_item";
+        
+        var text = document.createElement("div");
+        text.className = "skills_list_item_text";
+        text.innerHTML = current["name"];
+        
+        
+        var wrapper_stars = document.createElement("div");
+        wrapper_stars.className = "skills_list_item_stars";
+        
+        
+        
+        for(var stc=0; stc < current["stars"]; stc++){
+            
+           temp = document.createElement("div");
+           temp.className = "skills_star";
+           wrapper_stars.appendChild(temp);
+            
+        }
+        
+        for(stc=0; stc < 5-current["stars"]; stc++){
+            
+           temp = document.createElement("div");
+           temp.className = "skills_star";
+           
+           damp = document.createElement("div");
+           damp.className = "skills_star_dampen";
+           
+           temp.appendChild(damp);
+           
+           wrapper_stars.appendChild(temp);
+            
+        }
+        
+        wrapper.appendChild(text);
+        wrapper.appendChild(wrapper_stars);
+        
+        
+        if ((current["description"] != "")||(current["related"] != "")){
+            
+            temp = document.createElement("div");
+            temp.className = "skills_list_item_info";
+            temp.onmouseover = function() {drawInfoPopupSkills(this);}
+            temp.onmouseout = function() {removeInfoPopup(this);}
+            temp.setAttribute("info_descr",current["description"]);
+            temp.setAttribute("info_rel",current["related"]);
+            
+            wrapper.appendChild(temp);
+            
+        }
+
+        wrapper_soft.appendChild(wrapper);
+        
+    }
+ 
+    
+    
+    
+    entry.append(wrapper_soft);
+    entry.append(wrapper_prog);
+    
+    updateHeight();
+    
 }
 
 
