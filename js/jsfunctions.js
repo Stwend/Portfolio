@@ -72,14 +72,14 @@ function drawHeader()
         
         div_spacer_left.style.width = "195px";
         link_work.href = "index.html";
-        link_prog.href = "experience.html";
+        link_prog.href = "programming.html";
         link_about.href = "about.html";
         
     } else 
     {
         
         link_work.href = "../../index.html";
-        link_prog.href = "../../experience.html";
+        link_prog.href = "../../programming.html";
         link_about.href = "../../about.html";
         
         div_spacer_left.style.width = "95px";
@@ -99,7 +99,7 @@ function drawHeader()
         } else if (active == 4)
         {
         
-            link_back.href = "../../experience.html";
+            link_back.href = "../../programming.html";
         
         }
         
@@ -319,6 +319,69 @@ function drawSkills()
 function buildSkills(j)
 {
     
+    function buildList(parent,items) {
+
+        var temp = null;
+        var damp = null;
+        
+        for (var i=0; i < items.length; i++) {
+        
+            var current = items[i];
+
+            var wrapper = document.createElement("div");
+            wrapper.className = "noselect skills_list_item";
+
+            var text = document.createElement("div");
+            text.className = "skills_list_item_text";
+            text.innerHTML = current["name"];
+
+            var wrapper_stars = document.createElement("div");
+            wrapper_stars.className = "skills_list_item_stars";
+                    
+            for(var stc=0; stc < current["stars"]; stc++){
+
+                temp = document.createElement("div");
+                temp.className = "skills_star";
+                wrapper_stars.appendChild(temp);
+
+             }
+        
+            for(stc=0; stc < 5-current["stars"]; stc++){
+
+               temp = document.createElement("div");
+               temp.className = "skills_star";
+
+               damp = document.createElement("div");
+               damp.className = "skills_star_dampen";
+
+               temp.appendChild(damp);
+
+               wrapper_stars.appendChild(temp);
+
+            }
+            
+            
+            wrapper.appendChild(text);
+            wrapper.appendChild(wrapper_stars);
+
+
+            if ((current["description"] != "")||(current["related"] != "")){
+
+                temp = document.createElement("div");
+                temp.className = "skills_list_item_info";
+                temp.onmouseover = function() {drawInfoPopupSkills(this);}
+                temp.onmouseout = function() {removeInfoPopup(this);}
+                temp.setAttribute("info_descr",current["description"]);
+                temp.setAttribute("info_rel",current["related"]);
+
+                wrapper.appendChild(temp);
+
+            }
+            parent.appendChild(wrapper); 
+        }     
+    }
+    
+    
     var entry = document.getElementById("skills_entry");
     
     var json = JSON.parse(j);
@@ -352,71 +415,8 @@ function buildSkills(j)
     wrapper_prog.appendChild(prog_body);
     
 
-    
-    var temp = null;
-    var damp = null;
-    
-    for (var i=0; i < soft.length; i++) {
-        
-        var current = soft[i];
-        
-        var wrapper = document.createElement("div");
-        wrapper.className = "noselect skills_list_item";
-        
-        var text = document.createElement("div");
-        text.className = "skills_list_item_text";
-        text.innerHTML = current["name"];
-        
-        
-        var wrapper_stars = document.createElement("div");
-        wrapper_stars.className = "skills_list_item_stars";
-        
-        
-        
-        for(var stc=0; stc < current["stars"]; stc++){
-            
-           temp = document.createElement("div");
-           temp.className = "skills_star";
-           wrapper_stars.appendChild(temp);
-            
-        }
-        
-        for(stc=0; stc < 5-current["stars"]; stc++){
-            
-           temp = document.createElement("div");
-           temp.className = "skills_star";
-           
-           damp = document.createElement("div");
-           damp.className = "skills_star_dampen";
-           
-           temp.appendChild(damp);
-           
-           wrapper_stars.appendChild(temp);
-            
-        }
-        
-        wrapper.appendChild(text);
-        wrapper.appendChild(wrapper_stars);
-        
-        
-        if ((current["description"] != "")||(current["related"] != "")){
-            
-            temp = document.createElement("div");
-            temp.className = "skills_list_item_info";
-            temp.onmouseover = function() {drawInfoPopupSkills(this);}
-            temp.onmouseout = function() {removeInfoPopup(this);}
-            temp.setAttribute("info_descr",current["description"]);
-            temp.setAttribute("info_rel",current["related"]);
-            
-            wrapper.appendChild(temp);
-            
-        }
-
-        wrapper_soft.appendChild(wrapper);
-        
-    }
- 
-    
+    buildList(wrapper_soft,soft);
+    buildList(wrapper_prog,prog);
     
     
     entry.append(wrapper_soft);

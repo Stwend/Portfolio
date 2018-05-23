@@ -747,8 +747,6 @@ a {
     
     font-family: 'Chivo', sans-serif;
     margin: 40px 200px 50px 0px;
-    
-    width: 1500px;
     display:flex;
     
 }
@@ -777,7 +775,7 @@ a {
 
 .skills_list_item {
     
-    margin: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 100px;
     font-size: 18px;
     display:flex;
     padding: 15px 15px 15px 15px;
