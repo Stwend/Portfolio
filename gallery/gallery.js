@@ -1,7 +1,7 @@
 var embed_youtube = {pre:`<iframe width="1280" height="720" src="https://www.youtube.com/embed/`,post:`?rel=0&amp;showinfo=0;autoplay=1;controls=0;disablekb=1;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`};
 var gallery_info = {active: false, current: null, target: null, background: null, arrowL: null, arrowR: null, maxWidth: window.innerWidth-200, maxHeight: window.innerHeight-50};
 
-//Left/Right key functionality
+
 document.onkeydown = checkKey;
 
 function openGallery(start_element)
@@ -56,10 +56,10 @@ function openGallery(start_element)
 }
 
 
-function closeGallery(e)
+function closeGallery(e,override = false)
 {
-    //Only close if background is clicked
-    if (e.target == gallery_info.background)
+    //Only close if background is clicked or on override
+    if ((e.target == gallery_info.background)||override)
     {
         document.getElementById("gallery-blocker").remove();
         enableScroll();
@@ -211,14 +211,14 @@ function checkKey(e) {
     if (gallery_info.active)
     {
 
-    e = e || window.event;
+        e = e || window.event;
 
-    if (e.keyCode == '37') {
-       gallerySwitch(gallery_info.current.previousSibling);
+        if(e.keyCode == '37') {
+            gallerySwitch(gallery_info.current.previousSibling);
+        } else if (e.keyCode == '39') {
+            gallerySwitch(gallery_info.current.nextSibling);   
+        } else if (e.keyCode == '27') {
+            closeGallery("null",true);  
+        }
     }
-    else if (e.keyCode == '39') {
-       gallerySwitch(gallery_info.current.nextSibling);
-    }
-    }
-
 }
