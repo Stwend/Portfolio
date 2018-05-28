@@ -175,7 +175,9 @@ function drawHeader()
     link_lin.href = "https://www.linkedin.com/in/stefanwendling/";
     
     var link_mail = link_artst.cloneNode();
-    link_mail.href = "mailto:stefan-wendling@web.de";
+    link_mail.href = "";
+    //TODO: Mail Popup
+    link_mail.onclick = function(){return;}
     
     var div_artst = document.createElement("div");
     div_artst.className = "icon_item";
@@ -296,14 +298,14 @@ function buildRepos(j,parentID) {
 
     var parent = document.getElementById(parentID);
     
-    if(j == "No GitHub repositories found."){
+    if(j == ""){
         
         var wrapper = document.createElement("div");
         wrapper.className = "content_coding_item_error";
         
         var text = document.createElement("div");
         text.className = "content_subheadline";
-        text.innerHTML = j;
+        text.innerHTML = "No GitHub repositories found.";
         
         wrapper.appendChild(text);
         parent.appendChild(wrapper);

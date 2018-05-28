@@ -42,9 +42,9 @@ function updateRepos()
     $len = sizeof($res);
     for($i = 0; $i < $len; $i++){
         
-        $temp = new Project();
+        $temp = new RepoSummary();
         
-        $item = $res[i];
+        $item = $res[$i];
         $langlist = json_decode(file_get_contents($item["languages_url"],false,$context),true);
         
         $temp->name = $item["name"];
@@ -56,6 +56,10 @@ function updateRepos()
     }
 
     file_put_contents ($file , json_encode($summaries));
+    echo json_encode($summaries);
  
     
 }
+
+//for testing purposes
+updateRepos();

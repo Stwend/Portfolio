@@ -1,6 +1,8 @@
 <?php
 
 
+include_once 'storage.php';
+
 $f = filter_input(INPUT_GET,"f",FILTER_SANITIZE_STRING);
 $args = filter_input(INPUT_GET,"args",FILTER_SANITIZE_STRING);
 
@@ -20,31 +22,6 @@ if (in_array($f,$whitelist))
 }
 
 
-//CLASSES
-class ProjectSummary {
-    
-    public $link = null;
-    public $title = null;
-    
-}
-
-class Project {
-    
-    public $title = null;
-    public $software = array();
-    public $software_dict = null;
-    public $imagelinks = array();
-    public $videolinks = array();
-}
-
-class RepoSummary {
-    
-    public $name = "";
-    public $href = "";
-    public $languages = array();
-    public $description = "";
-    
-}
 
 
 
@@ -156,102 +133,31 @@ function getProject($project_id)
 //stores the latest repos from Github in a file (formatted to neat HTML) and adds a timestamp. Only accesses GitHub if the last access was more than 1 hour ago.
 //file storing/timestamping/updating should be pulled out into a set of generic functions for storage/access, also need to add failsafes (files missing etc).
 function getRepos()
-{
-    
-    //resource files
-    $file = dirname( dirname(__FILE__) ).'\\res\\repos.store';
-    $datefile = dirname( dirname(__FILE__) ).'\\res\\repos.store.date';
-    $langfile = dirname( dirname(__FILE__) ).'\\res\\repos.lang.store';
-    
-    $passed = strtotime(date('Y-m-d H:i:s')) - strtotime(file_get_contents($datefile));
-    
-    if(($passed/3600)>=1)
-    {
-        updateRepos();
-    }
-    
-    
-    //Get GitHub projects
-    $content = json_decode(file_get_contents($file),true);
-    $text = "";
-    $summaries = array();
-    
-    $langs = explode('*',file_get_contents($langfile));
-    
-    if ($content != "")
-    {
-        $i = 0;
-        
-        foreach ($content as $item)
-        {
-
-            $temp = new RepoSummary();
-            $languages_list = json_decode($langs[$i],true);
-            
-            $temp->name = $item["name"];
-            $temp->href = $item["html_url"];
-            $temp->languages = implode(', ',array_keys($languages_list));
-            $temp->description = $item['description'];
-
-            array_push($summaries, $temp);
-            
-            $i++;
-
-        }
-    } else 
-    {
-        return "No GitHub repositories found.";
-        //$text = $text.'<div class="content_coding_item_error"><div class=content_subheadline>No GitHub repositories found.</div></div>';
-   
-    }
-    
-    
-    
-    return json_encode($summaries);
+{  
+    return file_get_contents(dirname( dirname(__FILE__) ).'\\res\\codingprojects_git.json');
 }
 
 function getReposLocal()
 {
-  
-    return file_get_contents(dirname( dirname(__FILE__) ).'\\res\\codingprojects.json');
-
-}
-
-
-function updateRepos()
-{
+    $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\codeprojects\\*"),"is_dir");
+    $ar = array_reverse($ar);
     
-    $file = dirname( dirname(__FILE__) ).'\\res\\repos.store';
-    $langfile = dirname( dirname(__FILE__) ).'\\res\\repos.lang.store';
-    $datefile = dirname( dirname(__FILE__) ).'\\res\\repos.store.date';
+    $projects = array();
     
-    $opts  = array('http' => array('user_agent' => 'Stwend'));
     
-    $context = stream_context_create($opts);
-    
-    $res = file_get_contents("https://api.github.com/users/stwend/repos",false,$context);
-    
-    $dec = json_decode($res,true);
-    
-    $langlist = "";
-    
-    foreach ($dec as $item)
+    foreach ($ar as $item)
     {
         
-        $langurl = $item['languages_url'];
-        $langlist = $langlist.file_get_contents($langurl,false,$context).'*';
-   
+        $project = new RepoSummary();
+        $project->href = 'codeprojects'.explode("/codeprojects", str_replace("\\", "/", $item))[1]."/project.html";
+        $meta = get_meta_tags($item.'\\project.html');
+        $project->name = $meta["title"];
+        $project->description = $meta["descr"];
+        $project->languages = $meta["lang"];
+        
+        array_push($projects,$project);
     }
-    
-
-    
-    
-    
-    file_put_contents ($langfile , $langlist);
-    file_put_contents ($file , $res);
-    file_put_contents ($datefile , date('Y-m-d H:i:s'));
- 
-    
+    return json_encode($projects);
 }
 
 
