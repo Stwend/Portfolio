@@ -318,13 +318,15 @@ function buildRepos(j,parentID) {
     
     var json = JSON.parse(j);
     
+    var linktarget = (parentID == "git_entry" ? "_blank" : "_self");
+    
     for (var i=0; i<json.length; i++) {
         
         var current = json[i];
         
         var link = document.createElement("a");
         link.href = current["href"];
-        link.target = "_blank";
+        link.target = linktarget
         
         var wrapper = document.createElement("div");
         wrapper.className = "content_coding_item";
@@ -544,7 +546,7 @@ function buildProjects(j)
 function drawProject()
 {
     
-    var title = document.getElementsByName('descr')[0].getAttribute('content');
+    var title = document.getElementsByName('title')[0].getAttribute('content');
     
     
     callPhp("getProject",title,'buildProject(request.responseText)',"../../php/phpfunctions.php");
@@ -558,8 +560,6 @@ function buildProject(j)
     
     var json = JSON.parse(j);
     var entry = document.getElementById("project_entry");
-
-    
     
     
         
@@ -606,6 +606,21 @@ function buildProject(j)
 
     entry.appendChild(title);
     
+    if (json["description"] != null){
+        
+        temp = document.createElement("div");
+        temp.className = "noselect g_elem content";
+        temp.style = "grid-column: 2 / end; margin-right:80px; width: 1340px;";
+        
+        var inner = document.createElement("div");
+        inner.className = "content_paddedText";
+        inner.innerHTML = json["description"];
+        
+        temp.appendChild(inner);
+        
+        entry.appendChild(temp);
+        
+    }
 
     var img = null;
     
@@ -644,11 +659,35 @@ function buildProject(j)
     }
     
     
+    if (json["downloads"].length > 0){
+        
+        temp = document.createElement("div");
+        temp.className = "noselect g_elem content";
+        
+        temp.style = "grid-column: 1 / end; margin-right:40px; width: 1650px;";
+        entry.appendChild(temp);
+        
+    }
     
+    
+    updateHeight();
+    
+}
+
+
+function drawRepoProject()
+{
+    
+    var title = document.getElementsByName('title')[0].getAttribute('content');
+    
+    
+    callPhp("getRepo",title,'buildProject(request.responseText)',"../../php/phpfunctions.php");
     
     
     
 }
+
+
 
 
 

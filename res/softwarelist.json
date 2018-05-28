@@ -8,5 +8,15 @@
     "unity":"Unity3D",
     "krita":"Krita",
     "ink":"Inkscape",
-    "mari":"Mari"
+    "mari":"Mari",
+    
+    "HTML":"HTML",
+    "C++":"C++",
+    "C":"C",
+    "CSS":"CSS",
+    "C-Sharp":"C-Sharp",
+    "Java":"Java",
+    "Javascript":"JavaScript",
+    "PHP":"PHP",
+    "Python":"Python"
 }

@@ -2,7 +2,7 @@
     {
         "name":"Testprojekt",
         "href":"test1",
-        "languages":"C, C++, Java",
+        "languages":"C, C++, Java, C#, Javascript, PHP, Python",
         "description":"Just testing something."
     },
     

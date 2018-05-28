@@ -11,6 +11,9 @@ class ProjectSummary {
 class Project {
     
     public $title = null;
+    public $downloads = array();
+    public $description = "";
+    public $description_short = "";
     public $software = array();
     public $software_dict = null;
     public $imagelinks = array();

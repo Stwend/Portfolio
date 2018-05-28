@@ -7,7 +7,7 @@ $f = filter_input(INPUT_GET,"f",FILTER_SANITIZE_STRING);
 $args = filter_input(INPUT_GET,"args",FILTER_SANITIZE_STRING);
 
 
-$whitelist = ["getProjects","getProject","getRepos","getReposLocal","getSkills","sendMail"];
+$whitelist = ["getProjects","getProject","getRepos","getReposLocal","getRepo","getSkills","sendMail"];
 
 
 if (in_array($f,$whitelist))
@@ -38,7 +38,7 @@ function getProjects()
         
         $project = new ProjectSummary();
         $project->link = 'projects'.explode("/projects", str_replace("\\", "/", $item))[1];
-        $project->title = get_meta_tags($item.'\\project.html')["descr"];
+        $project->title = get_meta_tags($item.'\\project.html')["title"];
         
         array_push($projects,$project);
     }
@@ -46,9 +46,28 @@ function getProjects()
 }
 
 
-function getProject($project_id)
+
+
+
+
+
+function getProject($project_id){
+    
+    return grabJSON($project_id,"projects");
+    
+}
+
+function getRepo($project_id){
+    
+    return grabJSON($project_id,"codeprojects");
+    
+}
+
+
+
+function grabJSON($project_id,$subfolder)
 {
-    $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\projects\\*"),"is_dir");
+    $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\".$subfolder."\\*"),"is_dir");
 
     $path = "";
     $tags = "";
@@ -57,7 +76,7 @@ function getProject($project_id)
     {
         $path_temp = $item.'\\project.html';
 
-        $tags = get_meta_tags($path_temp)["descr"];
+        $tags = get_meta_tags($path_temp)["title"];
  
         if ($tags == $project_id)
         { 
@@ -68,43 +87,43 @@ function getProject($project_id)
     
     if ($path != "")
     {
-        
+        $tags = get_meta_tags($path_temp);
         $project = new Project();
-        $project->title = $tags;
+        $project->title = $tags["title"];
         
         
         $folder_gallery = $path.'\\gallery';
-        $file_cfg = json_decode(file_get_contents($path.'\\config.json'),true);
         $softwarelist = json_decode(file_get_contents(dirname( dirname(__FILE__) ).'\\res\\softwarelist.json'),true);
         
         $project->software_dict = $softwarelist;
         
+        $project->description = $tags["description"];
+        $project->description_short = $tags["descr"];
         
         
-        $video = $file_cfg["video"];
-        $software = $file_cfg["software"];
-                
-        if (software != ""){
+        
+        $video = json_decode($tags["video"],true);
+        $software = json_decode($tags["software"],true);
+        $downloads = json_decode($tags["downloads"],true);
+
             
-            foreach($software as $s){
+        foreach($software as $s){
                 
-                //array_push($project->software, $softwarelist[$s]);
-                array_push($project->software, $s);
+            array_push($project->software, $s);
    
-            }
         }
         
-        
-        if(video != "")
-        {
-            
-            foreach($video as $v){
+        foreach($video as $v){
                 
-                array_push($project->videolinks, $v);
-                
-            }
-            
+            array_push($project->videolinks, $v);        
         }
+            
+        foreach($downloads as $d){
+                
+            array_push($project->downloads, $d);
+                
+        }
+
         
         
 
@@ -123,9 +142,9 @@ function getProject($project_id)
     
     }
     
-    return json_encode($project);
-    
+    return json_encode($project); 
 }
+
 
 
 
@@ -147,13 +166,12 @@ function getReposLocal()
     
     foreach ($ar as $item)
     {
-        
         $project = new RepoSummary();
         $project->href = 'codeprojects'.explode("/codeprojects", str_replace("\\", "/", $item))[1]."/project.html";
         $meta = get_meta_tags($item.'\\project.html');
         $project->name = $meta["title"];
         $project->description = $meta["descr"];
-        $project->languages = $meta["lang"];
+        $project->languages = json_decode($meta["software"],true);
         
         array_push($projects,$project);
     }
