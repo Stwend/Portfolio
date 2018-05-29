@@ -255,7 +255,7 @@ function drawFooter()
     
     var footer = document.createElement("div");
     
-    footer.innerHTML = '<div class="footer_wrapper"><div class="footer_line"></div><div class="footer_content"><div class="noselect footer_copyright">All works (c) Stefan Wendling 2018.</div><div class="footer_contact">Contact | Imprint</div></div></div>';
+    footer.innerHTML = '<div class="footer_wrapper"><div class="footer_line"></div><div class="footer_content"><div class="noselect footer_copyright">All works (c) //your name// 2018.</div><div class="footer_contact">Contact | Imprint</div></div></div>';
     
     content.parentNode.insertBefore(footer, content.nextSibling);
     
