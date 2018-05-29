@@ -561,6 +561,9 @@ function buildProject(j)
     var json = JSON.parse(j);
     var entry = document.getElementById("project_entry");
     
+    var description = entry.innerHTML;
+    entry.innerHTML = "";
+    
     
         
     var title = document.createElement("div");
@@ -606,15 +609,14 @@ function buildProject(j)
 
     entry.appendChild(title);
     
-    if (json["description"] != null){
+    if (description.trim() != ""){
         
         temp = document.createElement("div");
-        temp.className = "noselect g_elem content";
-        temp.style = "grid-column: 2 / end; margin-right:80px; width: 1340px;";
+        temp.className = "noselect g_elem content content_text";
         
         var inner = document.createElement("div");
         inner.className = "content_paddedText";
-        inner.innerHTML = json["description"];
+        inner.innerHTML = description;
         
         temp.appendChild(inner);
         
@@ -662,9 +664,39 @@ function buildProject(j)
     if (json["downloads"].length > 0){
         
         temp = document.createElement("div");
-        temp.className = "noselect g_elem content";
+        temp.className = "noselect g_elem content content_download_wrapper";
         
-        temp.style = "grid-column: 1 / end; margin-right:40px; width: 1650px;";
+        var current = null;
+        var tempdl = null;
+        var templink = document.createElement("a");
+        var tempdl_c = document.createElement("div");
+        tempdl_c.className = "content_download_c";
+        var tempdl_icon = document.createElement("div");
+        tempdl_icon.className = "download_icon";
+        var tempdl_text = document.createElement("div");
+        tempdl_text.className = "download_text";
+        
+        for (var i=0; i < json["downloads"].length; i++) {
+            
+            current = json["downloads"][i];
+            
+            tempdl = document.createElement("div");
+            tempdl.className = "content_download";
+            
+            templink.href = "../../php/download.php?download=" + current;
+            tempdl.appendChild(templink.cloneNode());
+            tempdl.firstChild.appendChild(tempdl_c.cloneNode());
+            tempdl.firstChild.firstChild.appendChild(tempdl_icon.cloneNode());
+            tempdl_text.innerHTML = current;
+            tempdl.firstChild.firstChild.appendChild(tempdl_text.cloneNode(true));
+            
+            temp.appendChild(tempdl);
+            
+        }
+        
+        
+        
+        
         entry.appendChild(temp);
         
     }

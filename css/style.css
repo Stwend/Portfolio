@@ -351,6 +351,70 @@ a {
     position: relative;
 }
 
+.content_download {
+    
+    width: var(--element_size_Content);
+    height: var(--element_size_Content);
+    
+    position: relative;
+}
+
+.content_download_wrapper {
+    
+    grid-column: 1 / end;
+    width: 1671px;
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(var(--col_num_Content), auto);
+    grid-auto-flow: row;
+    justify-content: start;
+    background-color: var(--col);
+    border: 1px solid var(--mediumcontrast);
+    border-width: 1px 0px 1px 0px;
+}
+
+.content_text {
+    
+    grid-column: 2 / end;
+    margin-right:80px;
+    width: 1340px;
+    background-color: var(--col);
+    padding-top: 5px;
+}
+
+.content_download_c {
+    
+    width: 205px;
+    height: 155px;
+    margin: 50px;
+    position: relative;
+    padding-top: 50px;
+}
+
+.content_download_c:hover {
+    
+    background-color: var(--lowcontrast);
+}
+
+.download_icon {
+    width: 45px;
+    height: 45px;
+    margin-left: 80px;
+    background-image: url('../images/download.png');
+    background-repeat: no-repeat;
+}
+
+.download_text {
+    
+    text-align: center;
+    height: 25px;
+    margin-top: 15px;
+    font-family: 'Chivo', sans-serif;
+    font-weight: 300;
+    font-size: 12pt;
+    
+}
+
 
 .content_title_wrapper {
     
@@ -365,7 +429,7 @@ a {
     
     border: 0px solid var(--col);
     
-    background-color: var(--lowcontrast);
+    background-color: var(--complement);
     
     position: absolute;
     bottom: 0px;
@@ -397,7 +461,7 @@ a {
 .content:hover .content_title_wrapper {
     
     height: 40px;
-    border-top-width: 5px;
+    border-top-width: 2px;
     
     transition: height;
     
@@ -414,7 +478,7 @@ a {
     transition-delay: 0s;
     transition-duration: 0.05s;
     transition-timing-function: ease-out;
-    color: var(--complement);
+    color: var(--col);
 }
 
 /*CONTENT | Project Subpages*/
@@ -527,6 +591,7 @@ a {
 .project_title_descr_wrapper {
     
     margin: 15px;
+    padding-left:10px;
     
     display:grid;
     
@@ -541,7 +606,7 @@ a {
     
     width: var(--element_size_Content);
     height:240px;
-    border-top: 5px solid var(--col);
+    border-top: 2px solid var(--col);
     
     background-color: var(--complement);
     

@@ -56,7 +56,6 @@ function updateRepos()
     }
 
     file_put_contents ($file , json_encode($summaries));
-    echo json_encode($summaries);
  
     
 }
