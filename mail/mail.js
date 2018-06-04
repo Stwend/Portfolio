@@ -70,16 +70,21 @@ function openMail(mode,level=0)
     text_message.className = "m_bottomspace";
     mail_info.message_id = text_message;
 
-
+    var tip = document.createElement("div");
+    tip.className = "m_tip";
+    tip.innerHTML = "Clicking on the background will close this window.";
+    
     var button = document.createElement("div");
     button.className = "m_button";
     button.onclick = function() {sendMail();}
+    button.innerHTML = "Send Mail";
 
 
     div_wrapper.appendChild(text_name);
     div_wrapper.appendChild(text_contact);
     div_wrapper.appendChild(text_subject);
     div_wrapper.appendChild(text_message);
+    div_wrapper.appendChild(tip);
     div_wrapper.appendChild(button);
     div_content.appendChild(div_wrapper);
     div_blocker.appendChild(div_content);

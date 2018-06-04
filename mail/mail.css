@@ -23,26 +23,26 @@
 .m_wrapper {
     background-color: white;
     border: 1px solid black;  
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding:20px;
 }
 
 textarea, input {
     
+    resize: none;
     font-family: Arial, sans-serif;
-    width: calc(100% - 40px);
+    width: 100%;
     font-size: 14px;
     overflow: auto;
-    margin: 20px;
-    margin-bottom: 0px;
+    margin-bottom: 20px;
     background-color: #f2f2f2;
     border: 1px solid #e7e7e7;
     padding: 8px;
 }
 
-textarea {
-    
+textarea { 
     min-height:250px;
-    min-width: calc(100% - 40px);
-    
 }
 
 .m_bottomspace {
@@ -53,16 +53,31 @@ textarea {
 
 .m_button {
     
-    margin: auto;
-    margin-bottom: 20px;
-    background-color: #e7e7e7;
-    height: 50px;
+    margin-left: auto;
+    background-color: #444;
+    height: 30px;
     width:120px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 30px;
+    color: #f2f2f2;
+}
+
+.m_tip {
     
-} 
+    float: left;
+    margin-top: 12px;
+    height: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #aaa;
+    
+}
 
 .m_button:hover {
     
-    background-color: #ccc;
+    cursor: pointer;
+    background-color: #777;
     
 } 

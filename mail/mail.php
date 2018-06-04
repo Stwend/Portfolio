@@ -20,7 +20,7 @@ function sendMail($s, $m, $mo)
     
 
     
-    mail($to, $s, $m, "From: info@yourdomain.de");
+    mail($to, $s, $m, "From: ".$contact);
     
     
 }
