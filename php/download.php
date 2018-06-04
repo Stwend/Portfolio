@@ -1,6 +1,6 @@
 <?php
 
-//Partly from https://www.abeautifulsite.net/forcing-file-downloads-in-php
+//Parts taken from https://www.abeautifulsite.net/forcing-file-downloads-in-php
 
 
 

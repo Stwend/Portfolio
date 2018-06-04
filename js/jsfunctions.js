@@ -174,10 +174,14 @@ function drawHeader()
     var link_lin = link_artst.cloneNode();
     link_lin.href = "https://www.linkedin.com/in/stefanwendling/";
     
-    var link_mail = link_artst.cloneNode();
-    link_mail.href = "";
-    //TODO: Mail Popup
-    link_mail.onclick = function(){return;}
+    var link_mail = document.createElement("a"); 
+    link_mail.href = "#";
+    if (active < 3) {
+        link_mail.onclick = function() {openMail("default",0);}
+    
+    } else {     
+        link_mail.onclick = function() {openMail("default",2);}   
+    }
     
     var div_artst = document.createElement("div");
     div_artst.className = "icon_item";
@@ -194,6 +198,7 @@ function drawHeader()
     
     var div_mail = div_artst.cloneNode();
     div_mail.id = "icon_mail";
+    
     
     link_artst.appendChild(div_artst);
     link_git.appendChild(div_git);
