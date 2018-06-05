@@ -77,7 +77,7 @@ function openMail(mode,level=0)
     var button = document.createElement("div");
     button.className = "m_button";
     button.onclick = function() {sendMail();}
-    button.innerHTML = "Send Mail";
+    button.innerHTML = "Pronto!";
 
 
     div_wrapper.appendChild(text_name);

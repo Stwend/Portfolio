@@ -55,8 +55,8 @@ textarea {
     
     margin-left: auto;
     background-color: #444;
-    height: 30px;
-    width:120px;
+    max-width: 100px;
+    padding: 10px;
     text-align: center;
     font-family: Arial, sans-serif;
     font-size: 16px;
