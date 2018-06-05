@@ -255,12 +255,68 @@ function drawHeader()
 
 function drawFooter()
 {
-    
+    var insert = document.getElementById("menu_entry");
+    var active = parseInt(insert.getAttribute("data-active"));
     var content = document.getElementsByClassName("content_block")[0];
     
     var footer = document.createElement("div");
     
-    footer.innerHTML = '<div class="footer_wrapper"><div class="footer_line"></div><div class="footer_content"><div class="noselect footer_copyright">All works (c) //your name// 2018.</div><div class="footer_contact">Contact | Imprint</div></div></div>';
+    var wrapper = document.createElement("div");
+    wrapper.className = "footer_wrapper";
+    
+    var line = document.createElement("div");
+    line.className = "footer_line";
+    
+    var f_content = document.createElement("div");
+    f_content.className = "footer_content";
+    
+    var f_copyright = document.createElement("div");
+    f_copyright.className = "noselect footer_copyright";
+    f_copyright.innerHTML = "All works (c) //your name// 2018.";
+    
+    var f_contact = document.createElement("div");
+    f_contact.className = "footer_contact";
+    
+    
+    var f_mail = document.createElement("div");
+    f_mail.className = "pointer";
+    f_mail.innerHTML = "Contact";
+    
+    var f_spacer = document.createElement("div");
+    f_spacer.className = "noselect";
+    f_spacer.innerHTML = "&nbsp&nbsp|&nbsp&nbsp";
+    var f_a_imprint = document.createElement("a");
+    
+    var f_imprint = document.createElement("div");
+    f_imprint.innerHTML = "Imprint";
+    
+    
+    
+    if (active < 3) {
+        f_mail.onclick = function() {openMail("default",0);}
+        f_a_imprint.href = "imprint.html";
+    
+    } else {     
+        f_mail.onclick = function() {openMail("default",2);}
+        f_a_imprint.href = "../../imprint.html";
+    }
+    
+    
+    
+    
+    f_a_imprint.appendChild(f_imprint);
+    
+    f_contact.appendChild(f_mail);
+    f_contact.appendChild(f_spacer);
+    f_contact.appendChild(f_a_imprint);
+    
+    f_content.appendChild(f_copyright);
+    f_content.appendChild(f_contact);
+    
+    wrapper.appendChild(line);
+    wrapper.appendChild(f_content);
+    
+    footer.appendChild(wrapper);
     
     content.parentNode.insertBefore(footer, content.nextSibling);
     

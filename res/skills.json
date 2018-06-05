@@ -47,7 +47,7 @@
     {
         "name":"Unreal Engine 4",
         "stars": 2,
-        "description": "Several small projects at current workplace",
+        "description": "Several projects at current workplace",
         "related": ""
     },
     
@@ -59,17 +59,10 @@
     },
     
     {
-        "name":"Visual Studio",
-        "stars": 2,
-        "description": "Several small projects",
-        "related": "C++, C#"
-    },
-    
-    {
-        "name":"Various minor tools",
+        "name":"Various tools",
         "stars": 3,
         "description": "A few tools, offline and online, which I picked up to use for organizing my work or as small helpers",
-        "related": "Outlook, Excel, JIRA, Git, XNormal, PyCharm IDE, CLion IDE, Eclipse IDE, NetBeans IDE, GIMP, Krita"
+        "related": "Outlook, Excel, JIRA, Git, XNormal, PyCharm IDE, CLion IDE, Eclipse IDE, NetBeans IDE, Visual Studio IDE, GIMP, Krita"
     }
   
 ],
@@ -80,20 +73,20 @@
         "name":"Python",
         "stars": 3,
         "description": "several small to mid sized Maya & Blender plugins",
-        "related": "NumPy, Blender API, Maya API"
+        "related": "Blender API, Maya API"
     },
     
     {
         "name":"C++",
-        "stars": 2,
+        "stars": 1,
         "description": "A few side projects.",
-        "related": "Qt"
+        "related": ""
     },
   
     {
         "name":"C#",
         "stars": 2,
-        "description": "A mid-sized Unity game project with VR support.",
+        "description": "A small-sized Unity game project with VR support.",
         "related": "Unity 3D/MonoDevelop"
     },
     
@@ -101,28 +94,28 @@
         "name":"Java",
         "stars": 1,
         "description": "University courses and a small side project.",
-        "related": "JDBC"
+        "related": ""
     },
     
     {
         "name":"Javascript",
         "stars": 2,
         "description": "Several web frontend projects, including this website.",
-        "related": "JQuery, Json"
+        "related": ""
     },
     
     {
         "name":"PHP",
         "stars": 1,
-        "description": "Only the basics, simple frontend stuff.",
-        "related": "Json"
+        "description": "Only the basics.",
+        "related": ""
     },
     
     {
         "name":"HTML",
         "stars": 3,
         "description": "Several personal projects.",
-        "related": "CSS, Json, Javascript, PHP"
+        "related": "CSS, Javascript, PHP"
     },
     
     {

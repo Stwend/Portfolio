@@ -46,6 +46,9 @@
 body {
     
     overflow: auto;
+    font-family: 'Chivo', sans-serif;
+    font-size: 14pt;
+    color: var(--complement);
     
 }
 
@@ -57,6 +60,11 @@ a {
     
 }
 
+.pointer:hover {
+    
+    cursor:pointer;
+    
+}
 
 .noselect:hover {
     
@@ -1004,6 +1012,7 @@ a {
     width:186px;
     height: 48px;
     line-height: 48px;
+    display: flex;
     
 }
 
@@ -1018,4 +1027,43 @@ a {
     height: 48px;
     line-height: 48px;
     
+}
+
+
+.four-oh-four_title {
+    
+    font-family: title, sans-serif;
+    font-size: 100pt;
+    margin-left: 100px;
+    color: var(--complement);
+}
+
+.four-oh-four_text {
+    
+    font-family: 'Chivo', sans-serif;
+    font-size: 12pt;
+    margin-top: 30px;
+    margin-left: 100px;
+    color: var(--highcontrast);
+}
+
+.four-oh-four_mail {
+    
+    height: 50px;
+    width:150px;
+    background-color: var(--col);
+    border: 1px solid var(--mediumcontrast);
+    font-family: 'Chivo', sans-serif;
+    font-size: 18pt;
+    text-align: center;
+    line-height: 50px;
+    margin-top: 40px;
+    margin-left: 100px;
+}
+
+.four-oh-four_mail:hover {
+
+    background-color: var(--lowcontrast);
+    border-color: var(--lowcontrast);
+
 }
