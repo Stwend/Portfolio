@@ -4,9 +4,9 @@
 
 
 
-$download = filter_input(INPUT_GET,"download",FILTER_SANITIZE_STRING);
+$download = basename(filter_input(INPUT_GET,"download",FILTER_SANITIZE_STRING));
 
-$file = glob(dirname( dirname(__FILE__) ))[0].'\\downloads\\'.$download;
+$file = realpath('../downloads/'.$download);
 
 
 if( !file_exists($file) ) {
@@ -17,3 +17,5 @@ header('Content-Disposition: attachment; filename=' . basename($file));
 header("Content-Length: " . filesize($file));
 header("Content-Type: application/octet-stream;");
 readfile($file);
+
+?>

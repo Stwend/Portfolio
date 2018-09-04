@@ -2,11 +2,13 @@ var embed_youtube = {pre:`<iframe width="1280" height="720" src="https://www.you
 var gallery_info = {active: false, current: null, target: null, background: null, arrowL: null, arrowR: null, maxWidth: window.innerWidth-200, maxHeight: window.innerHeight-50};
 
 
-document.onkeydown = checkKey;
+document.addEventListener("keydown", function(e) {checkKey(e);});
+
 
 function openGallery(start_element)
 {
     disableScroll();
+    
     gallery_info.active = true;
     gallery_info.current = start_element;
     
@@ -221,4 +223,5 @@ function checkKey(e) {
             closeGallery("null",true);  
         }
     }
+    
 }

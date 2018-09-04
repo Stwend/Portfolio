@@ -26,6 +26,9 @@ class RepoSummary {
     public $href = "";
     public $languages = array();
     public $description = "";
+    public $software_dict = null;
+    public $isLocal = false;
     
 }
 
+?>

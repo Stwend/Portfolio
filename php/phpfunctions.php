@@ -1,6 +1,5 @@
 <?php
 
-
 include_once 'storage.php';
 
 $f = filter_input(INPUT_GET,"f",FILTER_SANITIZE_STRING);
@@ -27,7 +26,7 @@ if (in_array($f,$whitelist))
 
 function getProjects()
 {
-    $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\projects\\*"),"is_dir");
+    $ar = array_filter(glob("../projects/*"),"is_dir");
     $ar = array_reverse($ar);
     
     $projects = array();
@@ -38,10 +37,11 @@ function getProjects()
         
         $project = new ProjectSummary();
         $project->link = 'projects'.explode("/projects", str_replace("\\", "/", $item))[1];
-        $project->title = get_meta_tags($item.'\\project.html')["title"];
+        $project->title = get_meta_tags($item.'/project.html')["title"];
         
         array_push($projects,$project);
     }
+
     return json_encode($projects);
 }
 
@@ -67,14 +67,14 @@ function getRepo($project_id){
 
 function grabJSON($project_id,$subfolder)
 {
-    $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\".$subfolder."\\*"),"is_dir");
+    $ar = array_filter(glob("../".$subfolder."/*"),"is_dir");
 
     $path = "";
     $tags = "";
 
     foreach ($ar as $item)
     {
-        $path_temp = $item.'\\project.html';
+        $path_temp = $item.'/project.html';
 
         $tags = get_meta_tags($path_temp)["title"];
  
@@ -92,8 +92,8 @@ function grabJSON($project_id,$subfolder)
         $project->title = $tags["title"];
         
         
-        $folder_gallery = $path.'\\gallery';
-        $softwarelist = json_decode(file_get_contents(dirname( dirname(__FILE__) ).'\\res\\softwarelist.json'),true);
+        $folder_gallery = $path.'/gallery';
+        $softwarelist = json_decode(file_get_contents(realpath('../res/softwarelist.json')),true);
         
         $project->software_dict = $softwarelist;
         
@@ -129,11 +129,11 @@ function grabJSON($project_id,$subfolder)
 
         if(is_dir($folder_gallery))
         { 
-            $images = array_reverse(glob($folder_gallery . "\\*_thumb.jpg"));
+            $images = array_reverse(glob($folder_gallery . "/*_thumb.jpg"));
             
             foreach($images as $img)
             {
-                $imgname = substr(array_reverse(explode('\\', $img))[0],0,-10);
+                $imgname = substr(array_reverse(explode('/', $img))[0],0,-10);
                 array_push($project->imagelinks, $imgname);  
             }
             
@@ -153,13 +153,15 @@ function grabJSON($project_id,$subfolder)
 //file storing/timestamping/updating should be pulled out into a set of generic functions for storage/access, also need to add failsafes (files missing etc).
 function getRepos()
 {  
-    return file_get_contents(dirname( dirname(__FILE__) ).'\\res\\codingprojects_git.json');
+    return file_get_contents(realpath('../res/codingprojects_git.json'));
 }
 
 function getReposLocal()
 {
-    $ar = array_filter(glob(dirname( dirname(__FILE__) )."\\codeprojects\\*"),"is_dir");
+    $ar = array_filter(glob("../codeprojects/*"),"is_dir");
     $ar = array_reverse($ar);
+    
+    $softwarelist = json_decode(file_get_contents(realpath('../res/softwarelist.json')),true);
     
     $projects = array();
     
@@ -168,10 +170,12 @@ function getReposLocal()
     {
         $project = new RepoSummary();
         $project->href = 'codeprojects'.explode("/codeprojects", str_replace("\\", "/", $item))[1]."/project.html";
-        $meta = get_meta_tags($item.'\\project.html');
+        $meta = get_meta_tags($item.'/project.html');
         $project->name = $meta["title"];
         $project->description = $meta["descr"];
         $project->languages = json_decode($meta["software"],true);
+        $project->software_dict = $softwarelist;
+        $project->isLocal = true;
         
         array_push($projects,$project);
     }
@@ -182,9 +186,13 @@ function getReposLocal()
 function getSkills()
 {
     
-    $skillsfile = dirname( dirname(__FILE__) ).'\\res\\skills.json';
+    $skillsfile = realpath('../res/skills.json');
     
     return file_get_contents($skillsfile);
     
    
 }
+
+
+
+?>

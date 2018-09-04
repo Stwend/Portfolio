@@ -1,34 +1,26 @@
 <?php
 
 include_once '../php/phpfunctions.php';
+$secret = 'testing';
 
-function run() {
-    
-    //technically there is no need to do anything with the payload since I just grab the entire user repo list when this method is called
-    //but just to make it futureproof:
-    $postBody = filter_input(INPUT_post,"payload",FILTER_SANITIZE_STRING);
-    $payload = json_decode($postBody);
-    
-    $event = $payload["X-GitHub-Event"];
-    $reactToEvents = ["push","repository"];
-    
-    if(in_array($event,$reactToEvents)){
-        
-        updateRepos();
-        
-    }
-    
-    
-    
-}
+$rawPayload = file_get_contents('php://input');
+$signature = $_SERVER['HTTP_X_HUB_SIGNATURE'];
+$signature_check = 'sha1=' . hash_hmac('sha1',$rawPayload,$secret);
 
+if ($signature_check !== $signature) {
+    
+    die($signature.' COMPARED TO '.$signature_check);
+   
+} 
+
+updateRepos();
 
 
 
 function updateRepos()
 {
     
-    $file = dirname( dirname(__FILE__) ).'\\res\\codingprojects_git.json';
+    $file = realpath('../res/codingprojects_git.json');
     
     $summaries = array();
     
@@ -36,7 +28,7 @@ function updateRepos()
     
     $context = stream_context_create($opts);
     
-    $res = json_decode(file_get_contents("https://api.github.com/users/stwend/repos",false,$context),true);
+    $res = json_decode(file_get_contents("REPLACEME_link_to_your_repos",false,$context),true);
     
     
     $len = sizeof($res);
@@ -60,5 +52,4 @@ function updateRepos()
     
 }
 
-//for testing purposes
-updateRepos();
+?>

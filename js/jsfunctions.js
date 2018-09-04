@@ -162,17 +162,17 @@ function drawHeader()
     
     
     var link_artst = document.createElement("a");
-    link_artst.href = "https://www.artstation.com/stefanwendling";
+    link_artst.href = "REPLACEME_your_artstation_link";
     link_artst.target = "blank";
     
     var link_git = link_artst.cloneNode();
-    link_git.href = "https://github.com/Stwend";
+    link_git.href = "REPLACEME_your_github_link";
     
     var link_xing = link_artst.cloneNode();
-    link_xing.href = "https://www.xing.com/profile/Stefan_Wendling4";
+    link_xing.href = "REPLACEME_your_xing_link";
     
     var link_lin = link_artst.cloneNode();
-    link_lin.href = "https://www.linkedin.com/in/stefanwendling/";
+    link_lin.href = "REPLACEME_your_linkedin_link";
     
     var link_mail = document.createElement("a"); 
     link_mail.href = "#";
@@ -272,7 +272,7 @@ function drawFooter()
     
     var f_copyright = document.createElement("div");
     f_copyright.className = "noselect footer_copyright";
-    f_copyright.innerHTML = "All works (c) //your name// 2018.";
+    f_copyright.innerHTML = "All works (c) REPLACEME_your_name.";
     
     var f_contact = document.createElement("div");
     f_contact.className = "footer_contact";
@@ -380,6 +380,7 @@ function buildRepos(j,parentID) {
     var json = JSON.parse(j);
     
     var linktarget = (parentID == "git_entry" ? "_blank" : "_self");
+    var temp_list = [];
     
     for (var i=0; i<json.length; i++) {
         
@@ -398,7 +399,28 @@ function buildRepos(j,parentID) {
         
         var subheadline = document.createElement("div");
         subheadline.className = "content_subheadline";
+        
+        if (current["isLocal"]){
+        
+            for (var i=0; i < current["languages"].length; i++) {
+
+                var soft_short = current["languages"][i];
+                var soft = current["software_dict"][soft_short];
+                temp_list.push(soft);
+
+            }
+            
+        subheadline.innerHTML = temp_list;
+        temp_list = []; 
+            
+        } else {
+            
         subheadline.innerHTML = current["languages"];
+            
+        }
+        
+        
+        
         
         var descr = document.createElement("div");
         descr.className = "content_description";
@@ -693,7 +715,7 @@ function buildProject(j)
         
         temp = document.createElement("div");
         temp.className = "g_elem content_project";
-        temp.style = 'background-image: url("' + youtube_pre_img + vid + '/hqdefault.jpg");';
+        temp.style = 'background-image: url("' + youtube_pre_img + vid + '/maxresdefault.jpg");';
         temp.setAttribute("info_video",vid);
         temp.onclick = function() {openGallery(this);}
         
@@ -724,8 +746,11 @@ function buildProject(j)
     
     if (json["downloads"].length > 0){
         
+        //append spacer to avoid the gallery jumping to the download items
+        var spacer = document.createElement("div");
+        entry.append(spacer);
         temp = document.createElement("div");
-        temp.className = "noselect g_elem content content_download_wrapper";
+        temp.className = "noselect content content_download_wrapper";
         
         var current = null;
         var tempdl = null;

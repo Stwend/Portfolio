@@ -3,66 +3,10 @@
     "software":[
 
     {
-        "name":"Maya",
+        "name":"Example",
         "stars": 3,
-        "description": "Hard Surface Modeling, Rigging, Animating, Scripting, UVs",
-        "related": "Simplygon"
-    },
-    
-    {
-        "name":"Blender",
-        "stars": 5,
-        "description": "Hard Surface Modeling, Sculpting, Rigging, Animating, Physics Simulation, Texturing, Rendering, Video Editing, Scripting, UVs",
-        "related": ""
-    },
-    
-    {
-        "name":"Substance Designer/Painter",
-        "stars": 4,
-        "description": "",
-        "related": ""
-    },
-    
-    {
-        "name":"Mari",
-        "stars": 2,
-        "description": "Texturing",
-        "related": "UDIMs"
-    },
-    
-    {
-        "name":"Simplygon",
-        "stars": 3,
-        "description": "",
-        "related": ""
-    },
-    
-    {
-        "name":"Unity 3D",
-        "stars": 3,
-        "description": "A 2-month VR game project in university, several projects at current workplace",
-        "related": "C#"
-    },
-    
-    {
-        "name":"Unreal Engine 4",
-        "stars": 2,
-        "description": "Several projects at current workplace",
-        "related": ""
-    },
-    
-    {
-        "name":"DeltaGen",
-        "stars": 3,
-        "description": "Dataprep, Materials, Logic Network, Reduction, UVs",
-        "related": ""
-    },
-    
-    {
-        "name":"Various tools",
-        "stars": 3,
-        "description": "A few tools, offline and online, which I picked up to use for organizing my work or as small helpers",
-        "related": "Outlook, Excel, JIRA, Git, XNormal, PyCharm IDE, CLion IDE, Eclipse IDE, NetBeans IDE, Visual Studio IDE, GIMP, Krita"
+        "description": "Lorem Ipsum etc.",
+        "related": "example"
     }
   
 ],
@@ -70,59 +14,10 @@
 "programming": [
     
     {
-        "name":"Python",
-        "stars": 3,
-        "description": "several small to mid sized Maya & Blender plugins",
-        "related": "Blender API, Maya API"
-    },
-    
-    {
-        "name":"C++",
-        "stars": 1,
-        "description": "A few side projects.",
-        "related": ""
-    },
-  
-    {
-        "name":"C#",
-        "stars": 2,
-        "description": "A small-sized Unity game project with VR support.",
-        "related": "Unity 3D/MonoDevelop"
-    },
-    
-    {
-        "name":"Java",
-        "stars": 1,
-        "description": "University courses and a small side project.",
-        "related": ""
-    },
-    
-    {
-        "name":"Javascript",
-        "stars": 2,
-        "description": "Several web frontend projects, including this website.",
-        "related": ""
-    },
-    
-    {
-        "name":"PHP",
-        "stars": 1,
-        "description": "Only the basics.",
-        "related": ""
-    },
-    
-    {
-        "name":"HTML",
-        "stars": 3,
-        "description": "Several personal projects.",
-        "related": "CSS, Javascript, PHP"
-    },
-    
-    {
-        "name":"Others",
-        "stars": 1,
-        "description": "A few languages where I don't consider myself skilled enough to warrant a place on the list.",
-        "related": "C"
+        "name":"Example",
+        "stars": 5,
+        "description": "bla bla bla",
+        "related": "some words"
     }
     
     

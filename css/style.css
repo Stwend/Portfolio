@@ -1,5 +1,4 @@
 
-
 /*variables*/
 
 :root {
@@ -57,6 +56,12 @@ a {
     
     color: var(--complement);
     text-decoration: none;
+    
+}
+
+.auth {
+    
+    display:none;
     
 }
 
@@ -499,6 +504,7 @@ a {
     background-color: var(--lowcontrast);
     
     background-position: center;
+    background-size: cover;
     
     grid-column-start: auto;
     grid-row-start: auto;

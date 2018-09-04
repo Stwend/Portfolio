@@ -1,10 +1,11 @@
-var mail_info = {level: "", active: false, background: null, replaceable: null, mode: "default", name_id: null, subject_id: null, message_id: null, contact_id: null};
+var mail_info = {level: "", active: false, background: null, replaceable: null, mode: "default", name_id: null, subject_id: null, message_id: null, contact_id: null, auth: ""};
 
 
+document.addEventListener("keydown", function(e) {checkKeyM(e);});
 
 
 //mini version of original callPhp method to make this mail thing standalone
-async function callPhpMail(name,subject,message,contact,mode,callback)
+async function callPhpMail(name,subject,message,contact,mode,auth,callback)
 {    
     var request =  (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');  // XMLHttpRequest instance
   
@@ -15,11 +16,10 @@ async function callPhpMail(name,subject,message,contact,mode,callback)
     };
     
     
-    request.open("GET", mail_info.level + "mail/mail.php?subject=" + subject + "&message=" + message + "&contact=" + contact + "&mode=" + mode + "&name=" + name, false);
+    request.open("GET", mail_info.level + "mail/mail.php?subject=" + subject + "&message=" + message + "&contact=" + contact + "&mode=" + mode + "&name=" + name + "&auth=" + auth + "&agent=" + navigator.userAgent, false);
     request.send();
 }
 
-document.onkeydown = checkKey;
 
 function openMail(mode,level=0)
 {
@@ -27,7 +27,6 @@ function openMail(mode,level=0)
     disableScroll();
     mail_info.active = true;
     mail_info.mode = mode;
-    
     for(var i=0; i< level; i++) {
         
        mail_info.level += "../"
@@ -37,6 +36,7 @@ function openMail(mode,level=0)
     var div_blocker = document.createElement("div");
     div_blocker.className = "m_blocker";
     div_blocker.id = "mail-blocker";
+    div_blocker.onkeydown = checkKeyM;
     
     //Pass click target to close function
     div_blocker.addEventListener("click", function(e) {closeMail(e);});
@@ -69,6 +69,11 @@ function openMail(mode,level=0)
     text_message.placeholder = "Your message";
     text_message.className = "m_bottomspace";
     mail_info.message_id = text_message;
+    
+    var text_auth = document.createElement("input");
+    text_auth.className = "auth";
+    text_auth.placeholder = "Authentification";
+    mail_info.auth = text_auth;
 
     var tip = document.createElement("div");
     tip.className = "m_tip";
@@ -118,7 +123,7 @@ function sendMail() {
     //check if all fields are filled out
     if(mail_info.name_id.value != "" && mail_info.subject_id.value != "" && mail_info.message_id.value != "" && bMailCheck) {
         
-        callPhpMail(mail_info.name_id.value,mail_info.subject_id.value,mail_info.message_id.value,mail_info.contact_id.value,mail_info.mode,"mailSuccess(request.responseText);");
+        callPhpMail(mail_info.name_id.value,mail_info.subject_id.value,mail_info.message_id.value,mail_info.contact_id.value,mail_info.mode.value,mail_info.auth.value,"mailSuccess(request.responseText);");
         
     } else {
         
@@ -132,13 +137,25 @@ function sendMail() {
 
 
 function mailSuccess(text){
-    
-    mail_info.replaceable.innerHTML = text;
-    
+
+    if(text=="1") {
+        
+        mail_info.replaceable.innerHTML = "Mail sent successfully.<br><br>"; 
+        
+    } else if (text=="2"){
+        
+        mail_info.replaceable.innerHTML = "It seems you're sending a lot of mails. If you are a bot, shame on you.<br><br>"; 
+        
+    } else {
+        
+        mail_info.replaceable.innerHTML = text+"<br><br>";
+        
+    }
+      
 }
 
 
-function closeMail(e,override = false)
+function closeMail(e=null,override = false)
 {
     //Only close if background is clicked or on override
     if ((e.target == mail_info.background)||override)
@@ -169,7 +186,7 @@ function enableScroll()
 
 
 
-function checkKey(e) {
+function checkKeyM(e) {
 
     if (mail_info.active)
     {
